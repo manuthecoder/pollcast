@@ -7,7 +7,7 @@ import EmailProvider from "next-auth/providers/email";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
 
-import { selectAccounts, createAccount } from "../user";
+import { selectAccount, createAccount } from "../user";
 
 export default NextAuth({
   theme: {
@@ -18,9 +18,9 @@ export default NextAuth({
   adapter: MongoDBAdapter(clientPromise),
 
   callbacks: {
-    async signIn({ user, account, profile }) {
-      const email = profile.email;
-
+    async signIn({ user, account, profile }: any) {
+      const email: string = profile.email;
+      const accountExists = await selectAccount(email);
       return true;
     },
   },

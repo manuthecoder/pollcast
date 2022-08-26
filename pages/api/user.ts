@@ -8,7 +8,7 @@ import {
   updateUser,
 } from "../../prisma/user";
 
-export async function selectAccounts(email: string) {
+export async function selectAccount(email: string) {
   const user = await getUser(email);
   console.log(user);
 }

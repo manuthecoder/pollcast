@@ -20,7 +20,16 @@ export default NextAuth({
   callbacks: {
     async signIn({ user, account, profile }: any) {
       const email: string = profile.email;
-      const accountExists = await selectAccount(email);
+      const name: string = profile.name;
+      const accountMatch = await selectAccount(email);
+
+      if (accountMatch) {
+        console.log("Sign in successful!", accountMatch);
+      } else {
+        // Create user
+        const newAccountData = await createAccount(name, email);
+        console.log("Account created!", newAccountData);
+      }
       return true;
     },
   },

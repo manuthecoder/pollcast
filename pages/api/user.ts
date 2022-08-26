@@ -10,12 +10,12 @@ import {
 
 export async function selectAccount(email: string) {
   const user = await getUser(email);
-  console.log(user);
+  return user;
 }
 
 export async function createAccount(name: string, email: string) {
   const user = await createUser(name, email);
-  console.log(user);
+  return user;
 }
 
 export default async function handle(req: any, res: any) {

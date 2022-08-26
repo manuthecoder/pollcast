@@ -7,7 +7,7 @@ export const getAllUsers = async () => {
   return users;
 };
 
-export const getUser = async (id) => {
+export const getUser = async (id: any) => {
   const user = await prisma.account.findUnique({
     where: { id },
   });
@@ -15,7 +15,7 @@ export const getUser = async (id) => {
 };
 
 // CREATE
-export const createUser = async (email, name, birthYear) => {
+export const createUser = async (email: any, name: any, birthYear: any) => {
   const user = await prisma.account.create({
     data: {
       email,
@@ -27,7 +27,7 @@ export const createUser = async (email, name, birthYear) => {
 };
 
 // UPDATE
-export const updateUser = async (id, updateData) => {
+export const updateUser = async (id: any, updateData: any) => {
   const user = await prisma.account.update({
     where: {
       id,

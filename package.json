@@ -14,17 +14,12 @@
     "@mui/base": "^5.0.0-alpha.94",
     "@mui/material": "^5.10.2",
     "@prisma/client": "^4.2.1",
-    "@react-oauth/google": "^0.2.6",
-    "google-auth-library": "^8.4.0",
+    "mongodb": "^4.9.0",
     "next": "12.2.5",
     "next-auth": "^4.10.3",
-    "open": "^8.4.0",
-    "passport": "^0.6.0",
-    "passport-google-oauth20": "^2.0.0",
     "prisma": "^4.2.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "server-destroy": "^1.0.1"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.13",

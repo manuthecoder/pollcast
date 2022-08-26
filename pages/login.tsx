@@ -5,8 +5,19 @@ import Typography from "@mui/material/Typography";
 
 export default function Login() {
   useGoogleOneTapLogin({
-    onSuccess: (credentialResponse) => {
-      console.log(credentialResponse);
+    onSuccess: (credentialResponse: any) => {
+      alert(JSON.stringify(credentialResponse));
+      fetch(
+        "/api/login?" +
+          new URLSearchParams({
+            client_id: credentialResponse.clientId,
+            credential: credentialResponse.credential,
+          })
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          alert(JSON.stringify(res));
+        });
     },
 
     onError: () => {
@@ -23,45 +34,45 @@ export default function Login() {
         position: "fixed",
         top: 0,
         left: 0,
+        height: "100vh",
+        width: "100vw",
       }}
     >
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
+          position: "absolute",
+          top: 0,
+          left: 0,
           backdropFilter: "blur(30px)",
-          alignItems: "center",
+          background: "rgba(255,255,255,.8)",
           height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           width: "100vw",
         }}
       >
         <Box
           sx={{
-            backgroundColor: "rgba(255,255,255,0.5)",
-            backdropFilter: "blur(10px)",
-            border: "3px solid #fff",
-            p: 2,
-            width: "450px",
-            maxWidth: "calc(100vw - 20px)",
-            borderRadius: 4,
-            textAlign: "center",
+            width: "500px",
+            maxWidth: "calc(100vw - 40px)",
+            background: "#fff",
+            m: "20px",
+            boxShadow: "5px 5px #000",
           }}
         >
-          <Typography variant="h4" sx={{ mb: 2, mt: 4 }}>
-            Sign in to Votecast
-          </Typography>
-          <Box
-            sx={{
-              width: "200px",
-              mx: "auto",
-              p: 1,
-              overflow: "hidden",
-            }}
-          >
+          <Box sx={{ p: 7, px: 5 }}>
+            <Typography variant="h4" sx={{ fontWeight: "900", mb: 2 }}>
+              Sign in to Votecast
+            </Typography>
+            <Typography sx={{ fontWeight: "500", mb: 2 }}>
+              Use your account to create and share polls
+            </Typography>
             <GoogleLogin
               theme="filled_black"
               size="large"
-              shape="pill"
+              shape="square"
+              login_uri="/api/login"
               ux_mode="redirect"
               onSuccess={(credentialResponse) => {
                 console.log(credentialResponse);

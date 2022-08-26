@@ -1,4 +1,4 @@
-const handler = async (req, res) => {
+const handler = async (req: any, res: any) => {
   console.log(process.env.GOOGLE_CLIENT_SECRET);
 };
 

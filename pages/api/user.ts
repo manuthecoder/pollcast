@@ -8,6 +8,16 @@ import {
   updateUser,
 } from "../../prisma/user";
 
+export async function selectAccounts(email: string) {
+  const user = await getUser(email);
+  console.log(user);
+}
+
+export async function createAccount(name: string, email: string) {
+  const user = await createUser(name, email);
+  console.log(user);
+}
+
 export default async function handle(req: any, res: any) {
   const user = await getUser(req.query.id);
   console.log(user);

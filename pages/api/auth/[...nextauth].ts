@@ -7,19 +7,23 @@ import EmailProvider from "next-auth/providers/email";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
 
+import { selectAccounts, createAccount } from "../user";
+
 export default NextAuth({
+  theme: {
+    logo: "https://i.ibb.co/H4SQNtG/image.png",
+    colorScheme: "dark",
+  },
   // Configure one or more authentication providers
   adapter: MongoDBAdapter(clientPromise),
 
-  // callbacks: {
-  //   async redirect({ url, baseUrl }) {
-  //     // Allows relative callback URLs
-  //     if (url.startsWith("/")) return `${baseUrl}${url}`;
-  //     // Allows callback URLs on the same origin
-  //     else if (new URL(url).origin === baseUrl) return url;
-  //     return baseUrl;
-  //   },
-  // },
+  callbacks: {
+    async signIn({ user, account, profile }) {
+      const email = profile.email;
+
+      return true;
+    },
+  },
 
   providers: [
     GoogleProvider({
@@ -36,6 +40,9 @@ export default NextAuth({
     GitHubProvider({
       clientId: process.env.GITHUB_ID!.toString(),
       clientSecret: process.env.GITHUB_SECRET!.toString(),
+      // token: {
+      //   url: "https://manuthecoder-pollcast-rxr6pjv5rvq25v4w-3000.githubpreview.dev/api/auth/callback/github",
+      // },
     }),
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID!.toString(),

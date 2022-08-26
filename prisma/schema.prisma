@@ -6,8 +6,7 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
+  provider = "prisma-client-js"
 }
 
 model Account {
@@ -18,20 +17,20 @@ model Account {
 }
 
 model Poll {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   question    String
   description String
-  user        Account   @relation(fields: [userId], references: [id])
-  userId      String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
-  
-  choices     Choice[]
+  user        Account @relation(fields: [userId], references: [id])
+  userId      String  @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
+
+  choices Choice[]
 }
 
 model Choice {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
   poll   Poll   @relation(fields: [pollId], references: [id])
   pollId String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
 
-  name     String
-  votes    Int
+  name  String
+  votes Int
 }

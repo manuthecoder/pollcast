@@ -72,7 +72,7 @@ export default function Login() {
               theme="filled_black"
               size="large"
               shape="square"
-              login_uri="/api/login"
+              //   login_uri="/api/login"
               ux_mode="redirect"
               onSuccess={(credentialResponse) => {
                 console.log(credentialResponse);

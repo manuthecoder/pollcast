@@ -1,0 +1,37 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["mongoDb"]
+}
+
+model Account {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  name  String
+  polls Poll[]
+}
+
+model Poll {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  question    String
+  description String
+  user        Account   @relation(fields: [userId], references: [id])
+  userId      String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
+  
+  choices     Choice[] 
+}
+
+model Choice {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  poll   Poll   @relation(fields: [pollId], references: [id])
+  pollId String @db.ObjectId // relation scalar field  (used in the `@relation` attribute above)
+
+  name     String
+  votes    Int
+}

@@ -1,11 +1,11 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Component() {
-  const { data: session } = useSession();
+  const { data: session }: any = useSession();
   if (session) {
     return (
       <>
-        Signed in as {JSON.stringify(global.session)} <br />
+        Signed in as {JSON.stringify(session)} <br />
         <button onClick={() => signOut()}>Sign out</button>
       </>
     );

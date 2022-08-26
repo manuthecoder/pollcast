@@ -1,8 +1,15 @@
-*:not(.material-symbols-rounded) {
+*:not(.material-symbols-outlined, .material-symbols-rounded) {
   font-family: "IBM Plex Sans", sans-serif !important;
 }
 
 html,
 body {
   margin: 0;
+}
+
+.MuiTouchRipple-rippleVisible {
+  animation-duration: 0.25s !important;
+}
+.MuiTouchRipple-child {
+  filter: opacity(0.2) !important;
 }

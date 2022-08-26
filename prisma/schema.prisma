@@ -13,6 +13,7 @@ model Account {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   email String @unique
   name  String
+  image String
   polls Poll[]
 }
 

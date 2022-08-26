@@ -20,7 +20,8 @@ export const createUser = async (name: string, email: string) => {
     data: {
       email: email,
       name: name,
-      polls: [],
+      image: "",
+      // polls: [],
     },
   });
   return user;

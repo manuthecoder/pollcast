@@ -2,10 +2,10 @@
 
 import {
   createUser,
-  deleteUser,
-  getAllUsers,
+  // deleteUser,
+  // getAllUsers,
   getUser,
-  updateUser,
+  // updateUser,
 } from "../../prisma/user";
 
 export async function selectAccount(email: string) {

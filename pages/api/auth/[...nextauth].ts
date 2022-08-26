@@ -1,13 +1,10 @@
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github";
 import DiscordProvider from "next-auth/providers/discord";
-import EmailProvider from "next-auth/providers/email";
-
+import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import { createAccount, selectAccount } from "../user";
 import clientPromise from "../../../lib/mongodb";
-
-import { selectAccount, createAccount } from "../user";
 
 export default NextAuth({
   theme: {
@@ -56,17 +53,6 @@ export default NextAuth({
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID!.toString(),
       clientSecret: process.env.DISCORD_CLIENT_SECRET!.toString(),
-    }),
-    EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
-      },
-      from: process.env.EMAIL_FROM,
     }),
 
     // ...add more providers here

@@ -4,7 +4,6 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import Button from "@mui/material/Button";
-import Collapse from "@mui/material/Collapse";
 import { cyan } from "@mui/material/colors";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -95,7 +94,6 @@ function PopvoteStepIcon(props: StepIconProps) {
 function CreatePollDialog() {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [collapsed, setCollapsed] = React.useState(true);
   const [options, setOptions] = React.useState<any>([]);
   const steps = ["Options", "Add choices", "Share!"];
   const [step, setStep] = React.useState(0);
@@ -206,93 +204,48 @@ function CreatePollDialog() {
                   placeholder="What's your favorite color?"
                   onChange={formik.handleChange}
                 />
-                <Button
+                <Box
                   sx={{
-                    mb: 2,
-                    mt: 1,
-                    borderRadius: 5,
-                    textTransform: "none",
-                    color: "#fff",
-                    transition: "all .2s",
-                    "&:active": {
-                      transform: "scale(0.95)",
-                      transition: "none",
-                    },
-                    gap: 2,
-                    background: "#000",
-                    "&:hover": {
-                      background: "#202020",
-                    },
-                  }}
-                  variant="contained"
-                  disableElevation
-                >
-                  <span className="material-symbols-rounded">upload</span>
-                  Upload a header image
-                </Button>
-                <Divider
-                  sx={{
-                    my: !collapsed ? 0 : 1,
-                    transition: "all .2s",
-                    borderColor: "#eee",
-                  }}
-                />
-                <Button
-                  fullWidth
-                  onClick={() => setCollapsed(!collapsed)}
-                  sx={{
-                    justifyContent: "start",
-                    borderRadius: 5,
-                    textTransform: "none",
-                    transition: "all .2s",
-                    mb: 2,
-                    ...(!collapsed && {
-                      background: "#eee!important",
-                      px: 3,
-                      py: 2,
-                      mb: 0,
-                    }),
+                    display: "flex",
+                    justifyContent: "end",
                   }}
                 >
-                  More options
-                  <span
-                    className="material-symbols-rounded"
-                    style={{
-                      transition: "all .2s",
-                      display: "inline-block",
-                      transform: collapsed ? "rotate(0deg)" : "rotate(180deg)",
-                    }}
-                  >
-                    expand_more
-                  </span>
-                </Button>
-                <Collapse in={!collapsed}>
-                  <Box
+                  <Button
                     sx={{
-                      background: "#eee",
-                      p: 3,
-                      pt: 1,
                       mb: 2,
+                      mt: 1,
+                      borderRadius: 5,
+                      textTransform: "none",
+                      color: "#fff",
+                      transition: "all .2s",
+                      "&:active": {
+                        transform: "scale(0.95)",
+                        transition: "none",
+                      },
+                      gap: 2,
+                      background: "#000",
+                      "&:hover": {
+                        background: "#202020",
+                      },
                     }}
+                    variant="contained"
+                    disableElevation
                   >
-                    <TextField
-                      fullWidth
-                      id="description"
-                      name="description"
-                      label="Add a description (optional)"
-                      value={formik.values.description}
-                      autoComplete="off"
-                      disabled={loading}
-                      onChange={formik.handleChange}
-                      sx={{ mb: 2 }}
-                      InputProps={{
-                        sx: {
-                          borderRadius: 5,
-                        },
-                      }}
-                    />
-                  </Box>
-                </Collapse>
+                    <span className="material-symbols-rounded">upload</span>
+                    Upload a header image
+                  </Button>
+                </Box>
+                <TextField
+                  fullWidth
+                  id="description"
+                  name="description"
+                  label="Add a description (optional)"
+                  value={formik.values.description}
+                  autoComplete="off"
+                  disabled={loading}
+                  onChange={formik.handleChange}
+                  sx={{ mb: 4 }}
+                />
               </Box>
               <Box>
                 <Box
@@ -411,26 +364,33 @@ function CreatePollDialog() {
             </SwipeableViews>
             <LoadingButton
               loading={loading}
+              disabled={step === 1 && options.length < 2}
               fullWidth
-              variant="outlined"
+              variant="contained"
               color="inherit"
               sx={{
-                borderRadius: 5,
-                color: "#000",
+                borderRadius: 9999,
+                color: "#fff",
+                ...(!loading && {
+                  background: "#000",
+                  "&:hover": {
+                    background: "#000",
+                  },
+                }),
                 py: 1.5,
-                borderWidth: "2px!important",
                 boxShadow: "0px !important",
-                transition: "all .2s",
-                "&:active": {
-                  transform: "scale(0.96)",
-                  transition: "none",
-                },
+                textTransform: "none",
                 gap: 2,
               }}
+              disableElevation
               type="submit"
             >
-              Continue
-              <span className="material-symbols-rounded">chevron_right</span>
+              {step === 1 && options.length < 2
+                ? "Please add at least 2 options"
+                : "Continue"}
+              {options.length > 2 && (
+                <span className="material-symbols-rounded">chevron_right</span>
+              )}
             </LoadingButton>
           </form>
         </Box>

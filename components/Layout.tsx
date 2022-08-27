@@ -2,6 +2,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 import Button from "@mui/material/Button";
 import Collapse from "@mui/material/Collapse";
 import { cyan } from "@mui/material/colors";
@@ -50,7 +51,7 @@ const PopvoteConnector = styled(StepConnector)(({ theme }) => ({
     borderColor:
       theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
     borderTopWidth: 3,
-    borderRadius: 1,
+    borderRadius: 5,
   },
 }));
 
@@ -95,8 +96,8 @@ function CreatePollDialog() {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [collapsed, setCollapsed] = React.useState(true);
-  const [options, setOptions] = React.useState([]);
-  const steps = ["Enter details", "Add choices", "Share!"];
+  const [options, setOptions] = React.useState<any>([]);
+  const steps = ["Options", "Add choices", "Share!"];
   const [step, setStep] = React.useState(0);
 
   const formik = useFormik({
@@ -131,7 +132,7 @@ function CreatePollDialog() {
         variant="extended"
         disableRipple
         sx={{
-          borderRadius: 0,
+          borderRadius: 5,
           background: "#101010 !important",
           color: "#fff",
           boxShadow: "0px !important",
@@ -140,7 +141,7 @@ function CreatePollDialog() {
             transform: "scale(0.9)",
             transition: "none",
           },
-          // textTransform: "none",
+          textTransform: "none",
           gap: 2,
         }}
         aria-label="add"
@@ -192,7 +193,7 @@ function CreatePollDialog() {
         <Box sx={{ p: 2 }}>
           <form onSubmit={formik.handleSubmit}>
             <SwipeableViews index={step} disabled animateHeight>
-              <Box sx={{ mt: 1 }}>
+              <Box sx={{ my: 1 }}>
                 <TextField
                   fullWidth
                   id="name"
@@ -204,17 +205,12 @@ function CreatePollDialog() {
                   disabled={loading}
                   placeholder="What's your favorite color?"
                   onChange={formik.handleChange}
-                  InputProps={{
-                    sx: {
-                      borderRadius: 0,
-                    },
-                  }}
                 />
                 <Button
                   sx={{
                     mb: 2,
                     mt: 1,
-                    borderRadius: 0,
+                    borderRadius: 5,
                     textTransform: "none",
                     color: "#fff",
                     transition: "all .2s",
@@ -246,7 +242,7 @@ function CreatePollDialog() {
                   onClick={() => setCollapsed(!collapsed)}
                   sx={{
                     justifyContent: "start",
-                    borderRadius: 0,
+                    borderRadius: 5,
                     textTransform: "none",
                     transition: "all .2s",
                     mb: 2,
@@ -291,7 +287,7 @@ function CreatePollDialog() {
                       sx={{ mb: 2 }}
                       InputProps={{
                         sx: {
-                          borderRadius: 0,
+                          borderRadius: 5,
                         },
                       }}
                     />
@@ -299,27 +295,118 @@ function CreatePollDialog() {
                 </Collapse>
               </Box>
               <Box>
-                {options.map((option, index) => (
-                  <Box key={index.toString()}>{option}</Box>
-                ))}
-                {options.length === 0 && (
-                  <Box sx={{ p: 2, my: 2, background: "rgba(200,200,200,.2)" }}>
-                    No answers created
-                  </Box>
-                )}
+                <Box
+                  sx={{
+                    mb: 2,
+                    height: "200px",
+                    overflowY: "scroll",
+                    borderRadius: 5,
+                    background: "#eee",
+                    scrollBehavior: "smooth",
+                  }}
+                  id="optionList"
+                >
+                  {options.map((option: any, index: any) => (
+                    <Box
+                      sx={{
+                        p: 2,
+                        borderBottom: "1px solid rgba(200,200,200,.3)",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                      key={index.toString()}
+                    >
+                      {option}
+                      <IconButton
+                        sx={{ ml: "auto" }}
+                        onClick={() => {
+                          setOptions(
+                            options.filter(
+                              (o: string, i: number) => i !== index
+                            )
+                          );
+                        }}
+                      >
+                        <span className="material-symbols-rounded">delete</span>
+                      </IconButton>
+                    </Box>
+                  ))}
+                  {options.length === 0 && (
+                    <Skeleton
+                      variant="rectangular"
+                      width={"100%"}
+                      animation="wave"
+                      sx={{
+                        p: 2,
+                        height: "200px",
+                        display: "flex",
+                        width: "100%",
+                        borderRadius: 5,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: "rgba(200,200,200,.2)",
+                      }}
+                    >
+                      No answers created
+                    </Skeleton>
+                  )}
+                </Box>
+
                 <TextField
+                  autoComplete="off"
                   fullWidth
-                  id="option"
                   placeholder={formik.values.name}
                   name="option"
-                  sx={{ mb: 3, mt: 1 }}
-                  InputProps={{
-                    sx: {
-                      borderRadius: 0,
-                    },
+                  onKeyDown={(e) => {
+                    if (e.code === "Enter") {
+                      e.preventDefault();
+                      document.getElementById("createOption")!.click();
+                    }
                   }}
-                  label="Add an option"
+                  sx={{ my: 1 }}
+                  disabled={options.length >= 6}
+                  id="optionText"
+                  label={
+                    options.length <= 6 ? "Add an option" : "Maximum 6 options"
+                  }
                 />
+                <Box sx={{ display: "flex" }}>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    disableElevation
+                    disabled={options.length >= 6}
+                    sx={{
+                      mb: 2,
+                      gap: 2,
+                      mt: 1,
+                      background: "#000",
+                      color: "#fff",
+                      "&:hover": {
+                        background: "#000",
+                      },
+                      ml: "auto",
+                      textTransform: "none",
+                      borderRadius: 9999,
+                    }}
+                    size="large"
+                    id="createOption"
+                    onClick={() => {
+                      const e: any = document.getElementById("optionText");
+                      const f = [...new Set([...options, e!.value.toString()])];
+                      setOptions(f);
+                      e!.value = "";
+
+                      setTimeout(() => {
+                        document
+                          .getElementById("optionList")!
+                          .scrollTo(99999, 999999);
+                      }, 100);
+                    }}
+                  >
+                    <span className="material-symbols-rounded">add</span> Add
+                  </Button>
+                </Box>
               </Box>
             </SwipeableViews>
             <LoadingButton
@@ -328,7 +415,7 @@ function CreatePollDialog() {
               variant="outlined"
               color="inherit"
               sx={{
-                borderRadius: 0,
+                borderRadius: 5,
                 color: "#000",
                 py: 1.5,
                 borderWidth: "2px!important",
@@ -369,28 +456,6 @@ export function Layout({ children }: any) {
       <CssBaseline />
       <Paper square sx={{ pb: "50px" }} elevation={0}>
         {children}
-        {/* <List sx={{ mb: 2 }}>
-          {messages.map(({ id, primary, secondary, person }) => (
-            <React.Fragment key={id}>
-              {id === 1 && (
-                <ListSubheader sx={{ bgcolor: "background.paper" }}>
-                  Today
-                </ListSubheader>
-              )}
-              {id === 3 && (
-                <ListSubheader sx={{ bgcolor: "background.paper" }}>
-                  Yesterday
-                </ListSubheader>
-              )}
-              <ListItem button>
-                <ListItemAvatar>
-                  <Avatar alt="Profile Picture" src={person} />
-                </ListItemAvatar>
-                <ListItemText primary={primary} secondary={secondary} />
-              </ListItem>
-            </React.Fragment>
-          ))}
-        </List> */}
       </Paper>
       <AppBar
         position="fixed"
@@ -425,7 +490,7 @@ export function Layout({ children }: any) {
                   textTransform: "none",
                   color: "#000",
                   px: 2,
-                  borderRadius: 0,
+                  borderRadius: 5,
                 }}
                 size="large"
               >

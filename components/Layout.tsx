@@ -14,6 +14,17 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import Avatar from "@mui/material/Avatar";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { cyan } from "@mui/material/colors";
+
+// Get initials from name
+function getInitials(name: string) {
+  const parts = name.split(" ");
+  let initials = parts[0].substring(0, 1).toUpperCase();
+  if (parts.length > 1) {
+    initials += parts[1].substring(0, 1).toUpperCase();
+  }
+  return initials;
+}
 
 export function Layout({ children }: any) {
   const { data: session }: any = useSession();
@@ -57,11 +68,25 @@ export function Layout({ children }: any) {
         }}
       >
         <Toolbar>
-          <IconButton color="inherit" size="large" sx={{ ml: -1, mr: 0.5 }}>
-            <span className="material-symbols-outlined">account_circle</span>
+          <IconButton color="inherit" size="small" sx={{ ml: -1, mr: 0.5 }}>
+            <Avatar
+              alt="Profile Picture"
+              sx={{
+                background: cyan["A700"],
+                color: "#000",
+                width: 35,
+                fontSize: "16px",
+                height: 35,
+              }}
+            >
+              {getInitials(session?.user?.name).toUpperCase()}
+            </Avatar>
+          </IconButton>
+          <IconButton color="inherit" size="large" sx={{ ml: 0.5, mr: 0.5 }}>
+            <span className="material-symbols-outlined">search</span>
           </IconButton>
           <IconButton color="inherit" size="large" sx={{ ml: 0, mr: 0.5 }}>
-            <span className="material-symbols-outlined">search</span>
+            <span className="material-symbols-outlined">school</span>
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Fab

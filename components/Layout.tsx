@@ -1,12 +1,13 @@
 import LoadingButton from "@mui/lab/LoadingButton";
 import AppBar from "@mui/material/AppBar";
+import QRCode from "react-qr-code";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
+import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
 import { cyan } from "@mui/material/colors";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
 import Fab from "@mui/material/Fab";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
@@ -25,6 +26,9 @@ import { styled } from "@mui/material/styles";
 import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
+import Grow from '@mui/material/Grow';
+import { TransitionProps } from '@mui/material/transitions';
+
 
 import SwipeableViews from "react-swipeable-views";
 
@@ -95,8 +99,20 @@ function CreatePollDialog() {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [options, setOptions] = React.useState<any>([]);
+  const [openQr, setOpenQr] = React.useState(false);
   const steps = ["Options", "Add choices", "Share!"];
   const [step, setStep] = React.useState(0);
+  const [url, setUrl] = "https://popvote.ml/polls/1";
+
+  const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+      children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+  ) {
+  return <Grow in={openQr} ref={ref} {...props} />;
+  });
+  
 
   const formik = useFormik({
     initialValues: {
@@ -360,6 +376,32 @@ function CreatePollDialog() {
                     <span className="material-symbols-rounded">add</span> Add
                   </Button>
                 </Box>
+              </Box>
+              <Box>
+                <TextField value={url} fullWidth sx={{ mb: 2 }} />
+                <Button onClick={() => setOpenQr(true)}>Show QR code</Button>
+                <Dialog
+                onClose={() => setOpenQr(false)} open={openQr} 
+                PaperProps={{
+                  sx: {
+                    width: "100vw",
+                    height: "100vh",
+                    background: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    maxWidth:"100vw",
+                    minWidth:"100vw",
+                    minHeight:"100vh",
+                    maxHeight:"100vh"
+                  }
+                }}
+                >
+                  <IconButton sx={{position:"fixed",top:16,right:16}} onClick={() => setOpenQr(false)}>
+                    <span className="material-symbols-rounded">close</span>
+                  </IconButton>
+                    <QRCode value={url} />
+                </Dialog>
               </Box>
             </SwipeableViews>
             <LoadingButton

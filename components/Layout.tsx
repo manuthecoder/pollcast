@@ -95,6 +95,7 @@ function CreatePollDialog() {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [collapsed, setCollapsed] = React.useState(true);
+  const [options, setOptions] = React.useState([]);
   const steps = ["Enter details", "Add choices", "Share!"];
   const [step, setStep] = React.useState(0);
 
@@ -104,13 +105,20 @@ function CreatePollDialog() {
       description: "",
     },
     onSubmit: (values) => {
-      if (step === 1) {
+      if (step === steps.length - 1) {
         setLoading(true);
         setTimeout(() => {
           setLoading(false);
+          setStep(0);
         }, 2000);
-      } else {
-        setStep(step + 1);
+      } else if (step == 0) {
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          setStep(1);
+        }, 2000);
+      } else if (step == 1) {
+        setStep(2);
       }
       // alert(JSON.stringify(values, null, 2));
     },
@@ -171,7 +179,7 @@ function CreatePollDialog() {
         />
         <Stepper
           alternativeLabel
-          activeStep={0}
+          activeStep={step}
           connector={<PopvoteConnector />}
           sx={{ mb: 3 }}
         >
@@ -289,6 +297,29 @@ function CreatePollDialog() {
                     />
                   </Box>
                 </Collapse>
+              </Box>
+              <Box>
+                {options.map((option, index) => (
+                  <Box key={index.toString()}>{option}</Box>
+                ))}
+                {options.length === 0 && (
+                  <Box sx={{ p: 2, my: 2, background: "rgba(200,200,200,.2)" }}>
+                    No answers created
+                  </Box>
+                )}
+                <TextField
+                  fullWidth
+                  id="option"
+                  placeholder={formik.values.name}
+                  name="option"
+                  sx={{ mb: 3, mt: 1 }}
+                  InputProps={{
+                    sx: {
+                      borderRadius: 0,
+                    },
+                  }}
+                  label="Add an option"
+                />
               </Box>
             </SwipeableViews>
             <LoadingButton

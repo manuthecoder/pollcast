@@ -9,6 +9,7 @@ import CardContent from "@mui/material/CardContent";
 import CardActionArea from "@mui/material/CardActionArea";
 import useSWR from "swr";
 
+
 export default function Component() {
   const { data: session }: any = useSession();
   const url = "/api/feed";

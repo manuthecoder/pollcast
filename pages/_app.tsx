@@ -1,6 +1,7 @@
 import React from "react";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
+import NoSsr from "@mui/material/NoSsr";
 
 export default function App({
   Component,
@@ -8,7 +9,9 @@ export default function App({
 }: any) {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <NoSsr>
+        <Component {...pageProps} />
+      </NoSsr>
     </SessionProvider>
   );
 }

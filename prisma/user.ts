@@ -7,6 +7,13 @@ export const getAllUsers = async () => {
   return users;
 };
 
+export const getFeed = async () => {
+  const polls = await prisma.poll.findMany({
+    take: 20,
+  });
+  return polls;
+};
+
 export const getUser = async (email: any) => {
   const user = await prisma.account.findUnique({
     where: { email: email },

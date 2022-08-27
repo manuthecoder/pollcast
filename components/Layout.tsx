@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Fab from "@mui/material/Fab";
 import List from "@mui/material/List";
+import Button from "@mui/material/Button";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
@@ -69,24 +70,39 @@ export function Layout({ children }: any) {
       >
         <Toolbar>
           <IconButton color="inherit" size="small" sx={{ ml: -1, mr: 0.5 }}>
-            <Avatar
-              alt="Profile Picture"
-              sx={{
-                background: cyan["A700"],
-                color: "#000",
-                width: 35,
-                fontSize: "16px",
-                height: 35,
-              }}
-            >
-              {getInitials(session?.user?.name).toUpperCase()}
-            </Avatar>
+            {session ? (
+              <Avatar
+                alt="Profile Picture"
+                sx={{
+                  background: cyan["A700"],
+                  color: "#000",
+                  width: 35,
+                  fontSize: "16px",
+                  height: 35,
+                }}
+              >
+                {getInitials(session?.user?.name).toUpperCase()}
+              </Avatar>
+            ) : (
+              <Button
+                sx={{
+                  background: "#fff!important",
+                  textTransform: "none",
+                  color: "#000",
+                  px: 2,
+                  borderRadius: 0,
+                }}
+                size="large"
+              >
+                Sign in
+              </Button>
+            )}
           </IconButton>
           <IconButton color="inherit" size="large" sx={{ ml: 0.5, mr: 0.5 }}>
             <span className="material-symbols-outlined">search</span>
           </IconButton>
           <IconButton color="inherit" size="large" sx={{ ml: 0, mr: 0.5 }}>
-            <span className="material-symbols-outlined">school</span>
+            <span className="material-symbols-outlined">atr</span>
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Fab

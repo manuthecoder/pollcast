@@ -17,7 +17,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { useFormik } from "formik";
 import { useSession } from "next-auth/react";
 import * as React from "react";
-
+import Link from "next/link";
 import Check from "@mui/icons-material/Check";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -26,9 +26,8 @@ import { styled } from "@mui/material/styles";
 import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
-import Grow from '@mui/material/Grow';
-import { TransitionProps } from '@mui/material/transitions';
-
+import Grow from "@mui/material/Grow";
+import { TransitionProps } from "@mui/material/transitions";
 
 import SwipeableViews from "react-swipeable-views";
 
@@ -108,11 +107,10 @@ function CreatePollDialog() {
     props: TransitionProps & {
       children: React.ReactElement<any, any>;
     },
-    ref: React.Ref<unknown>,
+    ref: React.Ref<unknown>
   ) {
-  return <Grow in={openQr} ref={ref} {...props} />;
+    return <Grow in={openQr} ref={ref} {...props} />;
   });
-  
 
   const formik = useFormik({
     initialValues: {
@@ -381,26 +379,30 @@ function CreatePollDialog() {
                 <TextField value={url} fullWidth sx={{ mb: 2 }} />
                 <Button onClick={() => setOpenQr(true)}>Show QR code</Button>
                 <Dialog
-                onClose={() => setOpenQr(false)} open={openQr} 
-                PaperProps={{
-                  sx: {
-                    width: "100vw",
-                    height: "100vh",
-                    background: "#fff",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    maxWidth:"100vw",
-                    minWidth:"100vw",
-                    minHeight:"100vh",
-                    maxHeight:"100vh"
-                  }
-                }}
+                  onClose={() => setOpenQr(false)}
+                  open={openQr}
+                  PaperProps={{
+                    sx: {
+                      width: "100vw",
+                      height: "100vh",
+                      background: "#fff",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      maxWidth: "100vw",
+                      minWidth: "100vw",
+                      minHeight: "100vh",
+                      maxHeight: "100vh",
+                    },
+                  }}
                 >
-                  <IconButton sx={{position:"fixed",top:16,right:16}} onClick={() => setOpenQr(false)}>
+                  <IconButton
+                    sx={{ position: "fixed", top: 16, right: 16 }}
+                    onClick={() => setOpenQr(false)}
+                  >
                     <span className="material-symbols-rounded">close</span>
                   </IconButton>
-                    <QRCode value={url} />
+                  <QRCode value={url} />
                 </Dialog>
               </Box>
             </SwipeableViews>
@@ -486,18 +488,20 @@ export function Layout({ children }: any) {
                 {getInitials(session?.user?.name).toUpperCase()}
               </Avatar>
             ) : (
-              <Button
-                sx={{
-                  background: "#fff!important",
-                  textTransform: "none",
-                  color: "#000",
-                  px: 2,
-                  borderRadius: 5,
-                }}
-                size="large"
-              >
-                Sign in
-              </Button>
+              <Link href="/api/auth/signin?callbackUrl=/">
+                <Button
+                  sx={{
+                    background: "#fff!important",
+                    textTransform: "none",
+                    color: "#000",
+                    px: 2,
+                    borderRadius: 5,
+                  }}
+                  size="large"
+                >
+                  Sign in
+                </Button>
+              </Link>
             )}
           </IconButton>
           <IconButton color="inherit" size="large" sx={{ ml: 0.5, mr: 0.5 }}>
@@ -507,7 +511,7 @@ export function Layout({ children }: any) {
             <span className="material-symbols-outlined">atr</span>
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
-          <CreatePollDialog />
+          {session && <CreatePollDialog />}
         </Toolbar>
       </AppBar>
     </React.Fragment>

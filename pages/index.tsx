@@ -66,7 +66,7 @@ export default function Component() {
                 </Card>
               )}
               {data.map((poll: any, id: number) => (
-                <Link key={id.toString()} href={`/poll/${poll.id}`}>
+                <Link key={id.toString()} href={`/vote/${poll.id}`}>
                   <Card variant="outlined" sx={{ mb: 2 }}>
                     <CardActionArea>
                       {poll.image && (

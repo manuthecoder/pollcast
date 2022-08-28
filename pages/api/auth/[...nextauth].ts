@@ -11,9 +11,12 @@ export default NextAuth({
     logo: "https://i.ibb.co/H4SQNtG/image.png",
     colorScheme: "dark",
   },
+
   // Configure one or more authentication providers
   adapter: MongoDBAdapter(clientPromise),
-
+  session: {
+    // strategy: "jwt",
+  },
   callbacks: {
     async session({ session, user, token }: any) {
       if (session) {

@@ -91,7 +91,7 @@ function getInitials(name: string) {
   return initials;
 }
 
-export function Layout({ children }: any) {
+export function Layout({ poll = false, children }: any) {
   const { data: session }: any = useSession();
   return (
     <React.Fragment>
@@ -106,7 +106,7 @@ export function Layout({ children }: any) {
       >
         {children}
       </Paper>
-      <AppBar
+      {!poll && <AppBar
         position="fixed"
         elevation={0}
         sx={{
@@ -190,7 +190,7 @@ export function Layout({ children }: any) {
             {session && <CreatePollDialog />}
           </Box>
         </Toolbar>
-      </AppBar>
+      </AppBar>}
     </React.Fragment>
   );
 }

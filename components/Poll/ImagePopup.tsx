@@ -61,7 +61,9 @@ export function ImagePopup({ data }: any) {
           )}
         </Box>
       ) : (
-        <Loading height={"100px"} width={"200px"} />
+        <Box sx={{ mb: 1 }}>
+          <Loading height={"300px"} width={"100%"} />
+        </Box>
       )}
       {data && (
         <Dialog

@@ -14,13 +14,13 @@ import { ImagePopup } from "../components/Poll/ImagePopup";
 import { Sidebar } from "../components/Poll/Sidebar";
 import { Choice } from "../components/Poll/Choice";
 
-export function Loading({ width = "100%", height }: any) {
+export function Loading({ mb = false, width = "100%", height }: any) {
   return (
     <Skeleton
       width={width}
       height={height}
       variant="rectangular"
-      sx={{ borderRadius: 5 }}
+      sx={{ borderRadius: 5, mb: mb ? 2 : 0 }}
     />
   );
 }
@@ -93,7 +93,11 @@ export default function Vote() {
                   ))}
                 </>
               ) : (
-                <Loading height={50} width={"100%"} />
+                <>
+                  {[...new Array(5)].map((_, i) => (
+                    <Loading height={50} width={"100%"} key={i.toString()} mb />
+                  ))}
+                </>
               )}
             </Grid>
             <Grid item xs={12} sm={5}>

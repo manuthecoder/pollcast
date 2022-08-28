@@ -128,6 +128,7 @@ export function Layout({ poll = false, children }: any) {
                 color="inherit"
                 size="small"
                 sx={{
+                  "&:hover": { background: "#101010" },
                   ml: { xs: -1, sm: 0 },
                   mr: { xs: 0.5, sm: 0 },
                   order: { sm: 3 },
@@ -155,7 +156,12 @@ export function Layout({ poll = false, children }: any) {
               <IconButton
                 color="inherit"
                 size="large"
-                sx={{ ml: 0.5, mr: 0.5 }}
+                sx={{
+                  ml: 0.5,
+                  mr: 0.5,
+                  "&:hover": { background: "#101010" },
+                  transition: "none",
+                }}
               >
                 <span className="material-symbols-outlined">search</span>
               </IconButton>
@@ -165,7 +171,12 @@ export function Layout({ poll = false, children }: any) {
                     <IconButton
                       color="inherit"
                       size="large"
-                      sx={{ ml: 0, mr: 0.5 }}
+                      sx={{
+                        ml: 0,
+                        mr: 0.5,
+                        "&:hover": { background: "#101010" },
+                        transition: "none",
+                      }}
                     >
                       <span className="material-symbols-outlined">poll</span>
                     </IconButton>
@@ -173,7 +184,12 @@ export function Layout({ poll = false, children }: any) {
                   <IconButton
                     color="inherit"
                     size="large"
-                    sx={{ ml: 0, mr: 0.8 }}
+                    sx={{
+                      ml: 0,
+                      mr: 0.8,
+                      "&:hover": { background: "#101010" },
+                      transition: "none",
+                    }}
                   >
                     <span className="material-symbols-outlined">atr</span>
                   </IconButton>
@@ -197,6 +213,9 @@ export function Layout({ poll = false, children }: any) {
                     display: { xs: "none", sm: "block" },
                     cursor: "pointer",
                     fontWeight: "900",
+                    "&:hover": {
+                      textDecoration: "underline",
+                    },
                   }}
                 >
                   Popvote

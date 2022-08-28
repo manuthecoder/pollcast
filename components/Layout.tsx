@@ -200,15 +200,18 @@ export function Layout({ poll = false, children }: any) {
                 ml: { xs: "auto", sm: "unset" },
               }}
             >
-              <Typography
-                variant="h5"
-                sx={{
-                  display: { xs: "none", sm: "block" },
-                  fontWeight: "900",
-                }}
-              >
-                Popvote
-              </Typography>
+              <Link href="/">
+                <Typography
+                  variant="h5"
+                  sx={{
+                    display: { xs: "none", sm: "block" },
+                    cursor: "pointer",
+                    fontWeight: "900",
+                  }}
+                >
+                  Popvote
+                </Typography>
+              </Link>
               {session && <CreatePollDialog />}
             </Box>
           </Toolbar>

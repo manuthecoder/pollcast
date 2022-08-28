@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Link from "next/link";
 import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import CardMedia from "@mui/material/CardMedia";
@@ -16,6 +17,26 @@ import Skeleton from "@mui/material/Skeleton";
 import Container from "@mui/material/Container";
 
 // let socket: any;
+
+function Sidebar() {
+  return (
+    <>
+      <Card
+        sx={{
+          boxShadow: 0,
+          backgroundColor: "#eee",
+          borderRadius: 5,
+          p: 2,
+        }}
+      >
+        <CardContent>
+          <Typography variant="h2">5</Typography>
+          <Typography variant="h6">Votes</Typography>
+        </CardContent>
+      </Card>
+    </>
+  );
+}
 
 function Loading({ width = "100%", height }: any) {
   return (
@@ -116,27 +137,43 @@ export default function Vote() {
           </Dialog>
         )}
         <Container sx={{ mt: 10 }}>
-          <Typography variant="h3" sx={{ fontWeight: "900" }}>
-            {data ? data.question : <Loading height={50} />}
-          </Typography>
-          <Typography variant="h6" sx={{ my: 2, mt: 1 }}>
-            {data ? data.description : <Loading height={20} width={"70%"} />}
-          </Typography>
-          <Typography variant="body2" sx={{ my: 0, mt: -1 }}>
-            Asked{" "}
-            <Link href="/">
-              <MuiLink sx={{ cursor: "pointer" }}>1 hour ago</MuiLink>
-            </Link>
-          </Typography>
-          {data ? (
-            <Box sx={{ mt: 5 }}>
-              {data.choices.map((choice: any, key: string) => (
-                <Choice choice={choice} key={key.toString()} />
-              ))}
-            </Box>
-          ) : (
-            <Loading height={50} width={"100%"} />
-          )}
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={7}>
+              <Typography variant="h3" sx={{ fontWeight: "900" }}>
+                {data ? data.question : <Loading height={50} />}
+              </Typography>
+              <Typography variant="h6" sx={{ my: 2, mt: 1 }}>
+                {data ? (
+                  data.description
+                ) : (
+                  <Loading height={20} width={"70%"} />
+                )}
+              </Typography>
+              <Typography variant="body2" sx={{ my: 0, mt: -1 }}>
+                Asked{" "}
+                <Link href="/">
+                  <MuiLink sx={{ cursor: "pointer" }}>1 hour ago</MuiLink>
+                </Link>
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2} sx={{ mt: 2 }}>
+            <Grid item xs={12} sm={7}>
+              {data ? (
+                <>
+                  {data.choices.map((choice: any, key: string) => (
+                    <Choice choice={choice} key={key.toString()} />
+                  ))}
+                </>
+              ) : (
+                <Loading height={50} width={"100%"} />
+              )}
+            </Grid>
+            <Grid item xs={12} sm={5}>
+              <Sidebar />
+            </Grid>
+          </Grid>
+
           {/* {JSON.stringify(data)} */}
           {data ? (
             <>

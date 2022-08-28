@@ -76,7 +76,7 @@ export default function Component() {
                     }}
                   >
                     <CardActionArea>
-                      {poll.image && (
+                      {/* {poll.image && (
                         <CardMedia>
                           <picture>
                             <img
@@ -92,7 +92,7 @@ export default function Component() {
                             />
                           </picture>
                         </CardMedia>
-                      )}
+                      )} */}
                       <CardContent>
                         <Typography
                           variant="h5"

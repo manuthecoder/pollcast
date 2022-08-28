@@ -5,18 +5,23 @@ import NoSsr from "@mui/material/NoSsr";
 import Head from "next/head";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import Cookies from "js-cookie";
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: any) {
-  const [theme, setTheme] = React.useState<any>("light");
+function App({ Component, pageProps: { session, ...pageProps } }: any) {
+  const [theme, setDarkMode] = React.useState<any>(
+    Cookies.get("theme") || "light"
+  );
 
   const darkTheme = createTheme({
     palette: {
       mode: theme,
     },
   });
+
+  const setTheme = (theme: any) => {
+    Cookies.set("theme", theme, { expires: 7 });
+    setDarkMode(theme);
+  };
 
   global.setTheme = setTheme;
   global.theme = theme;
@@ -33,5 +38,13 @@ export default function App({
         </NoSsr>
       </SessionProvider>
     </ThemeProvider>
+  );
+}
+
+export default function Render({ Component, pageProps }: any) {
+  return (
+    <NoSsr>
+      <App pageProps={pageProps} Component={Component} />
+    </NoSsr>
   );
 }

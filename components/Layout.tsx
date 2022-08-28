@@ -103,6 +103,9 @@ export function Layout({ poll = false, children }: any) {
             pt: { xs: "0", sm: "70px" },
             pb: { xs: "50px", sm: "0" },
           }),
+          ...(poll && {
+            ml: { sm: "95px" },
+          }),
         }}
         elevation={0}
       >
@@ -168,12 +171,24 @@ export function Layout({ poll = false, children }: any) {
               >
                 <span className="material-symbols-outlined">search</span>
               </IconButton>
-              <IconButton color="inherit" size="large" sx={{ ml: 0, mr: 0.5 }}>
-                <span className="material-symbols-outlined">poll</span>
-              </IconButton>
-              <IconButton color="inherit" size="large" sx={{ ml: 0, mr: 0.5 }}>
-                <span className="material-symbols-outlined">atr</span>
-              </IconButton>
+              {session && (
+                <>
+                  <IconButton
+                    color="inherit"
+                    size="large"
+                    sx={{ ml: 0, mr: 0.5 }}
+                  >
+                    <span className="material-symbols-outlined">poll</span>
+                  </IconButton>
+                  <IconButton
+                    color="inherit"
+                    size="large"
+                    sx={{ ml: 0, mr: 0.8 }}
+                  >
+                    <span className="material-symbols-outlined">atr</span>
+                  </IconButton>
+                </>
+              )}
             </Box>
             <Box
               sx={{
@@ -198,6 +213,26 @@ export function Layout({ poll = false, children }: any) {
             </Box>
           </Toolbar>
         </AppBar>
+      )}
+      {poll && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "95px",
+            background: "black",
+            height: "100vh",
+          }}
+        >
+          <picture>
+            <img
+              src="https://i.ibb.co/H4SQNtG/image.png"
+              alt="logo"
+              style={{ width: "100%" }}
+            />
+          </picture>
+        </Box>
       )}
     </React.Fragment>
   );

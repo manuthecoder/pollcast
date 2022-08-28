@@ -21,6 +21,16 @@ export const getUser = async (email: any) => {
   return user;
 };
 
+export const findPoll = async (id: any) => {
+  const user = await prisma.poll.findUnique({
+    where: { id: id },
+    include: {
+      choices: true, // Return all fields
+    },
+  });
+  return user;
+};
+
 export const createPoll = async ({
   question,
   description,

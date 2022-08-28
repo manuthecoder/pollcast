@@ -26,14 +26,15 @@ export default function Vote() {
 
   const sendMessage = async (msg: string) => {
     socket.emit("createdMessage", msg);
-    alert("Sent!");
+    // alert("Sent!");
   };
 
   const url =
-    "/api/fetchPoll?id=" +
+    "/api/fetchPoll?" +
     new URLSearchParams({
       id: window.location.href.split("/vote/")[1],
     });
+  // alert(url);
   const { error, data } = useSWR(url, () =>
     fetch(url).then((res) => res.json())
   );

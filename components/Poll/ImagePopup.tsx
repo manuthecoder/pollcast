@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
-import { Loading } from "../../pages/[...vote]";
+import { Loading } from "../../pages/vote/[...id]";
 
 // let socket: any;
 export function ImagePopup({ data }: any) {

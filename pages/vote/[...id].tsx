@@ -1,4 +1,4 @@
-import { Layout } from "../components/Layout";
+import { Layout } from "../../components/Layout";
 import useSWR from "swr";
 // import io from "socket.io-client";
 import { useEffect } from "react";
@@ -10,9 +10,9 @@ import Alert from "@mui/material/Alert";
 import MuiLink from "@mui/material/Link";
 import Skeleton from "@mui/material/Skeleton";
 import Container from "@mui/material/Container";
-import { ImagePopup } from "../components/Poll/ImagePopup";
-import { Sidebar } from "../components/Poll/Sidebar";
-import { Choice } from "../components/Poll/Choice";
+import { ImagePopup } from "../../components/Poll/ImagePopup";
+import { Sidebar } from "../../components/Poll/Sidebar";
+import { Choice } from "../../components/Poll/Choice";
 
 export function Loading({ mb = false, width = "100%", height }: any) {
   return (
@@ -77,9 +77,11 @@ export default function Vote() {
                 )}
               </Typography>
               <Typography variant="body2" sx={{ my: 0, mt: -1 }}>
-                Asked{" "}
-                <Link href="/">
-                  <MuiLink sx={{ cursor: "pointer" }}>1 hour ago</MuiLink>
+                Asked by{" "}
+                <Link href={"/users/" + (data && data.user.id)}>
+                  <MuiLink sx={{ cursor: "pointer" }}>
+                    {data && data.user.name}
+                  </MuiLink>
                 </Link>
               </Typography>
             </Grid>

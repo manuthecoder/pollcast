@@ -220,13 +220,15 @@ export function Layout({ poll = false, children }: any) {
               </IconButton>
               {session && (
                 <>
-                  <IconButton
-                    color="inherit"
-                    size="large"
-                    sx={{ ml: 0, mr: 0.5 }}
-                  >
-                    <span className="material-symbols-outlined">poll</span>
-                  </IconButton>
+                  <Link href="/my-polls">
+                    <IconButton
+                      color="inherit"
+                      size="large"
+                      sx={{ ml: 0, mr: 0.5 }}
+                    >
+                      <span className="material-symbols-outlined">poll</span>
+                    </IconButton>
+                  </Link>
                   <IconButton
                     color="inherit"
                     size="large"

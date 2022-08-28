@@ -10,8 +10,8 @@ import useSWR from "swr";
 import { CardMedia } from "@mui/material";
 import { PollCard } from "../components/Feed/PollCard";
 
-function MyPolls() {
-  const url = "/api/feed?userId=";
+function MyPolls({ session }: any) {
+  const url = "/api/feed?userId=" + session.id;
   const { data, error } = useSWR(url, async (url) => {
     const res = await fetch(url);
     return res.json();
@@ -30,7 +30,7 @@ function MyPolls() {
           fontWeight: "900",
         }}
       >
-        Explore
+        My polls
       </Typography>
       {error && (
         <Card
@@ -42,7 +42,7 @@ function MyPolls() {
             boxShadow: "0",
           }}
         >
-          An error occurred while loading your feed.
+          An error occurred while loading your polls.
         </Card>
       )}
       {data ? (
@@ -83,9 +83,7 @@ function MyPolls() {
 }
 
 export default function Component() {
-  return (
-    <Layout>
-      <MyPolls />
-    </Layout>
-  );
+  const { data: session }: any = useSession();
+
+  return <Layout>{session && <MyPolls session={session} />}</Layout>;
 }

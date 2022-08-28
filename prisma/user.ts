@@ -7,9 +7,12 @@ export const getAllUsers = async () => {
   return users;
 };
 
-export const getFeed = async () => {
+export const getFeed = async (userId: string | null) => {
   const polls = await prisma.poll.findMany({
-    take: 20,
+    ...(userId && { where: { userId: userId } }),
+    ...(!userId && {
+      take: 20,
+    }),
   });
   return polls;
 };
@@ -26,6 +29,7 @@ export const findPoll = async (id: any) => {
     where: { id: id },
     include: {
       choices: true, // Return all fields
+      user: true,
     },
   });
   return user;

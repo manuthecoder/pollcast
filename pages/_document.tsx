@@ -70,7 +70,7 @@ export default function Document() {
         <link rel="shortcut icon" href="/icons/16x16.png" />
 
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content="https://yourdomain.com" />
+        <meta name="twitter:url" content="https://popvote.ml" />
         <meta name="twitter:title" content="Popvote" />
         <meta
           name="twitter:description"
@@ -78,7 +78,7 @@ export default function Document() {
         />
         <meta
           name="twitter:image"
-          content="https://yourdomain.com/icons/android-chrome-192x192.png"
+          content="https://popvote.ml/icons/android-chrome-192x192.png"
         />
         <meta name="twitter:creator" content="@DavidWShadow" />
         <meta property="og:type" content="website" />
@@ -88,10 +88,10 @@ export default function Document() {
           content="Popvote - Create your poll now!"
         />
         <meta property="og:site_name" content="Popvote" />
-        <meta property="og:url" content="https://yourdomain.com" />
+        <meta property="og:url" content="https://popvote.ml" />
         <meta
           property="og:image"
-          content="https://yourdomain.com/icons/apple-touch-icon.png"
+          content="https://popvote.ml/icons/apple-touch-icon.png"
         />
       </Head>
       <body>

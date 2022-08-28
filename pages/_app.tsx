@@ -11,6 +11,8 @@ export default function App({
     <SessionProvider session={session}>
       <Head>
         <title>Popvote</title>
+        <meta name="theme-color" content="#000000" />
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <NoSsr>
         <Component {...pageProps} />

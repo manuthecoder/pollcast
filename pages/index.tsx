@@ -4,11 +4,13 @@ import { Layout } from "../components/Layout";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
+import Link from "next/link";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import CardActionArea from "@mui/material/CardActionArea";
 import useSWR from "swr";
+import { CardMedia } from "@mui/material";
 
 export default function Component() {
   const { data: session }: any = useSession();
@@ -64,22 +66,37 @@ export default function Component() {
                 </Card>
               )}
               {data.map((poll: any, id: number) => (
-                <Card
-                  variant="outlined"
-                  sx={{ p: 2, m: 2 }}
-                  key={id.toString()}
-                >
-                  <CardActionArea>
-                    <CardContent>
-                      <Typography variant="h5" component="div">
-                        {poll.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {poll.description}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
+                <Link key={id.toString()} href={`/poll/${poll.id}`}>
+                  <Card variant="outlined" sx={{ mb: 2 }}>
+                    <CardActionArea>
+                      {poll.image && (
+                        <CardMedia>
+                          <picture>
+                            <img
+                              src={poll.image}
+                              alt="Poll Image"
+                              draggable="false" // Prevents image from being dragged
+                              style={{
+                                width: "100%",
+                                maxHeight: "300px",
+                                objectFit: "cover",
+                                height: "auto",
+                              }}
+                            />
+                          </picture>
+                        </CardMedia>
+                      )}
+                      <CardContent>
+                        <Typography variant="h5" component="div" gutterBottom>
+                          {poll.question}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {poll.description}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Link>
               ))}
             </>
           ) : (

@@ -15,6 +15,14 @@ export default NextAuth({
   adapter: MongoDBAdapter(clientPromise),
 
   callbacks: {
+    async session({ session, user, token }: any) {
+      if (session) {
+        const accountMatch = await selectAccount(user.email);
+        return { ...session, id: accountMatch.id };
+      } else {
+        return { session };
+      }
+    },
     async signIn({ user, account, profile }: any) {
       const email: string = profile.email;
       const name: string = profile.name;

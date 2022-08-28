@@ -8,6 +8,7 @@ import Fab from "@mui/material/Fab";
 import IconButton from "@mui/material/IconButton";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
 import * as React from "react";
 import Step from "@mui/material/Step";
@@ -17,6 +18,7 @@ import Grow from "@mui/material/Grow";
 import { TransitionProps } from "@mui/material/transitions";
 import SwipeableViews from "react-swipeable-views";
 import { PopvoteConnector, PopvoteStepIcon } from "./Layout";
+import { useSession } from "next-auth/react";
 
 export function CreatePollDialog() {
   const [open, setOpen] = React.useState(false);
@@ -25,7 +27,8 @@ export function CreatePollDialog() {
   const [openQr, setOpenQr] = React.useState(false);
   const steps = ["Options", "Add choices", "Share!"];
   const [step, setStep] = React.useState(0);
-  const [url, setUrl] = "https://popvote.ml/polls/1";
+  const [url, setUrl] = React.useState("https://popvote.ml/polls/1");
+  const { data: session }: any = useSession();
 
   const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -40,14 +43,12 @@ export function CreatePollDialog() {
     initialValues: {
       name: "",
       description: "",
+      image: "",
     },
     onSubmit: (values) => {
       if (step === steps.length - 1) {
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-          setStep(0);
-        }, 2000);
+        setStep(0);
+        formik.resetForm();
       } else if (step == 0) {
         setLoading(true);
         setTimeout(() => {
@@ -55,7 +56,23 @@ export function CreatePollDialog() {
           setStep(1);
         }, 2000);
       } else if (step == 1) {
-        setStep(2);
+        setLoading(false);
+        const params = new URLSearchParams({
+          question: values.name,
+          description: values.description,
+          image: values.image,
+          user: session.id,
+          choices: JSON.stringify(options),
+        });
+        alert(params);
+        fetch("/api/createPoll?" + params)
+          .then((res) => res.json())
+          .then((data: any) => {
+            alert(JSON.stringify(data));
+            setLoading(false);
+            setUrl("https://popvote.ml/vote/" + data.id);
+            setStep((prevActiveStep) => prevActiveStep + 1);
+          });
       }
       // alert(JSON.stringify(values, null, 2));
     },
@@ -129,6 +146,7 @@ export function CreatePollDialog() {
           ))}
         </Stepper>
         <Box sx={{ p: 2 }}>
+          {/* {JSON.stringify(session)} */}
           <form onSubmit={formik.handleSubmit}>
             <SwipeableViews index={step} disabled animateHeight>
               <Box sx={{ my: 1 }}>
@@ -302,10 +320,26 @@ export function CreatePollDialog() {
                 </Box>
               </Box>
               <Box>
-                <TextField value={url} fullWidth sx={{ mb: 2 }} />
-                <Button onClick={() => setOpenQr(true)}>Show QR code</Button>
+                <TextField value={url} fullWidth />
+                <Button
+                  onClick={() => {
+                    setOpenQr(true);
+                    document.body.requestFullscreen();
+                  }}
+                  fullWidth
+                  disableElevation
+                  size="large"
+                  sx={{
+                    my: 2,
+                    borderRadius: 9,
+                    py: 1.5,
+                    textTransform: "none",
+                  }}
+                  variant="contained"
+                >
+                  Present QR code
+                </Button>
                 <Dialog
-                  onClose={() => setOpenQr(false)}
                   open={openQr}
                   PaperProps={{
                     sx: {
@@ -324,11 +358,37 @@ export function CreatePollDialog() {
                 >
                   <IconButton
                     sx={{ position: "fixed", top: 16, right: 16 }}
-                    onClick={() => setOpenQr(false)}
+                    onClick={() => {
+                      setOpenQr(false);
+                    }}
                   >
                     <span className="material-symbols-rounded">close</span>
                   </IconButton>
-                  <QRCode value={url} />
+                  <Box
+                    sx={{
+                      maxWidth: "500px",
+                      border: "1px solid #eee",
+                      borderRadius: 5,
+                      p: 5,
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography variant="h5" sx={{ mb: 4, fontWeight: "900" }}>
+                      Scan the QR code to start voting
+                    </Typography>
+                    <Box
+                      sx={{
+                        background: "#eee",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        p: 4,
+                        borderRadius: 5,
+                      }}
+                    >
+                      <QRCode value={url} bgColor="#eee" />
+                    </Box>
+                  </Box>
                 </Dialog>
               </Box>
             </SwipeableViews>

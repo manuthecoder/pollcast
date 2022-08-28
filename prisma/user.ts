@@ -21,6 +21,40 @@ export const getUser = async (email: any) => {
   return user;
 };
 
+export const createPoll = async ({
+  question,
+  description,
+  image,
+  user,
+  choices,
+}: any) => {
+  const poll = await prisma.poll.create({
+    data: {
+      question: question,
+      description: description,
+      image: image,
+      user: {
+        connect: {
+          id: user,
+        },
+      },
+      choices: {
+        create: [],
+      },
+    },
+  });
+
+  await prisma.choice.createMany({
+    data: choices.map((choice: any) => {
+      return {
+        name: choice,
+        pollId: poll.id,
+      };
+    }),
+  });
+  return poll;
+};
+
 // CREATE
 export const createUser = async (name: string, email: string) => {
   const user = await prisma.account.create({

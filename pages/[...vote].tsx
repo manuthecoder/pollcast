@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
-import Grid from "@mui/material/Grid";
+import Link from "next/link";
 import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
 import CardMedia from "@mui/material/CardMedia";
 import CardActionArea from "@mui/material/CardActionArea";
+import MuiLink from "@mui/material/Link";
 import Skeleton from "@mui/material/Skeleton";
 import Container from "@mui/material/Container";
 
@@ -114,107 +115,80 @@ export default function Vote() {
             </Box>
           </Dialog>
         )}
-        <Card
-          sx={{
-            p: 3,
-            py: 5,
-            borderRadius: 5,
-            boxShadow:
-              "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-            width: "100%",
-          }}
-          variant="outlined"
-        >
-          <Grid container spacing={5}>
-            <Grid item xs={7} sx={{ p: 1 }}>
-              <Box
-                sx={{
-                  borderRadius: 5,
-                  height: "100%",
-                  py: 1,
-                }}
-              >
-                <Box>
-                  <Typography variant="h3" sx={{ fontWeight: "900" }}>
-                    {data ? data.question : <Loading height={50} />}
-                  </Typography>
-                  <Typography variant="h6" sx={{ my: 2, mt: 1 }}>
-                    {data ? (
-                      data.description
-                    ) : (
-                      <Loading height={20} width={"70%"} />
-                    )}
-                  </Typography>
-                  <Typography variant="body2" sx={{ my: 0, mt: -1 }}>
-                    0 votes &bull; 1 hour ago
-                  </Typography>
-                  {data ? (
-                    <Box sx={{ mt: 5 }}>
-                      {data.choices.map((choice: any, key: string) => (
-                        <Choice choice={choice} key={key.toString()} />
-                      ))}
-                    </Box>
-                  ) : (
-                    <Loading height={50} width={"100%"} />
-                  )}
-                </Box>
-              </Box>
-              {/* {JSON.stringify(data)} */}
-            </Grid>
-            <Grid item sx={{ p: 1 }} xs={5}>
-              {data ? (
-                <>
-                  {data.image && (
-                    <Card
+        <Container sx={{ mt: 10 }}>
+          <Typography variant="h3" sx={{ fontWeight: "900" }}>
+            {data ? data.question : <Loading height={50} />}
+          </Typography>
+          <Typography variant="h6" sx={{ my: 2, mt: 1 }}>
+            {data ? data.description : <Loading height={20} width={"70%"} />}
+          </Typography>
+          <Typography variant="body2" sx={{ my: 0, mt: -1 }}>
+            Asked{" "}
+            <Link href="/">
+              <MuiLink sx={{ cursor: "pointer" }}>1 hour ago</MuiLink>
+            </Link>
+          </Typography>
+          {data ? (
+            <Box sx={{ mt: 5 }}>
+              {data.choices.map((choice: any, key: string) => (
+                <Choice choice={choice} key={key.toString()} />
+              ))}
+            </Box>
+          ) : (
+            <Loading height={50} width={"100%"} />
+          )}
+          {/* {JSON.stringify(data)} */}
+          {data ? (
+            <>
+              {data.image && (
+                <Card
+                  sx={{
+                    width: "100%",
+                    height: "auto",
+                    minHeight: "200px",
+                    background: "#000",
+                    borderRadius: 5,
+                    position: "relative",
+                  }}
+                  elevation={0}
+                >
+                  <CardActionArea onClick={() => setOpen(true)}>
+                    <IconButton
                       sx={{
-                        width: "100%",
-                        height: "auto",
-                        minHeight: "200px",
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                        m: 2,
+                        pointerEvents: "none",
+                        color: "#fff",
+                        backdropFilter: "blur(10px)",
                         background: "#000",
-                        borderRadius: 5,
-                        position: "relative",
                       }}
-                      elevation={0}
+                      size="small"
                     >
-                      <CardActionArea onClick={() => setOpen(true)}>
-                        <IconButton
-                          sx={{
-                            position: "absolute",
-                            top: 0,
-                            right: 0,
-                            m: 2,
-                            pointerEvents: "none",
-                            color: "#fff",
-                            backdropFilter: "blur(10px)",
-                            background: "#000",
-                          }}
-                          size="small"
-                        >
-                          <span className="material-symbols-rounded">
-                            fullscreen
-                          </span>
-                        </IconButton>
-                        <CardMedia sx={{ width: "100%", height: "200px" }}>
-                          <picture>
-                            <img
-                              src={data.image}
-                              alt="attached image"
-                              draggable={false}
-                              style={{ width: "100%" }}
-                            />
-                          </picture>
-                        </CardMedia>
-                      </CardActionArea>
-                    </Card>
-                  )}
-                </>
-              ) : (
-                <Loading height={"100px"} width={"200px"} />
+                      <span className="material-symbols-rounded">
+                        fullscreen
+                      </span>
+                    </IconButton>
+                    <CardMedia sx={{ width: "100%", height: "200px" }}>
+                      <picture>
+                        <img
+                          src={data.image}
+                          alt="attached image"
+                          draggable={false}
+                          style={{ width: "100%" }}
+                        />
+                      </picture>
+                    </CardMedia>
+                  </CardActionArea>
+                </Card>
               )}
-            </Grid>
-          </Grid>
+            </>
+          ) : (
+            <Loading height={"100px"} width={"200px"} />
+          )}
           {error && <>An error occured while trying to fetch the poll</>}
-        </Card>
+        </Container>
       </Box>
     </Layout>
   );

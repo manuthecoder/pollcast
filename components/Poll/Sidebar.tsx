@@ -9,7 +9,7 @@ export function Sidebar() {
       <Card
         sx={{
           boxShadow: 0,
-          backgroundColor: "#eee",
+          backgroundColor: "rgba(200,200,200,.3)",
           borderRadius: 5,
           p: 1.5,
           mb: 2,
@@ -25,7 +25,7 @@ export function Sidebar() {
       <Card
         sx={{
           boxShadow: 0,
-          backgroundColor: "#eee",
+          backgroundColor: "rgba(200,200,200,.3)",
           borderRadius: 5,
           p: 1.5,
           mb: 2,

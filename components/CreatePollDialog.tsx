@@ -126,7 +126,7 @@ export function CreatePollDialog() {
         <Box
           sx={{
             mx: "auto",
-            background: "#eee",
+            background: "rgba(200,200,200,.3)",
             my: 2,
             height: 5,
             width: 30,
@@ -212,7 +212,7 @@ export function CreatePollDialog() {
                     height: "200px",
                     overflowY: "scroll",
                     borderRadius: 5,
-                    background: "#eee",
+                    background: "rgba(200,200,200,.3)",
                     scrollBehavior: "smooth",
                   }}
                   id="optionList"
@@ -367,7 +367,7 @@ export function CreatePollDialog() {
                   <Box
                     sx={{
                       maxWidth: "500px",
-                      border: "1px solid #eee",
+                      border: "1px solid rgba(200,200,200,.3)",
                       borderRadius: 5,
                       p: 5,
                       textAlign: "center",
@@ -378,7 +378,7 @@ export function CreatePollDialog() {
                     </Typography>
                     <Box
                       sx={{
-                        background: "#eee",
+                        background: "rgba(200,200,200,.3)",
                         display: "inline-flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -386,7 +386,7 @@ export function CreatePollDialog() {
                         borderRadius: 5,
                       }}
                     >
-                      <QRCode value={url} bgColor="#eee" />
+                      <QRCode value={url} bgColor="rgba(200,200,200,.3)" />
                     </Box>
                   </Box>
                 </Dialog>

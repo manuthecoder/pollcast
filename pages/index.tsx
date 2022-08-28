@@ -72,7 +72,7 @@ export default function Component() {
                       mb: 2,
                       boxShadow: 0,
                       borderRadius: 5,
-                      background: "#eee",
+                      background: "rgba(200,200,200,.3)",
                     }}
                   >
                     <CardActionArea>

@@ -99,98 +99,106 @@ export function Layout({ poll = false, children }: any) {
       <Paper
         square
         sx={{
-          pt: { xs: "0", sm: "70px" },
-          pb: { xs: "50px", sm: "0" },
+          ...(!poll && {
+            pt: { xs: "0", sm: "70px" },
+            pb: { xs: "50px", sm: "0" },
+          }),
         }}
         elevation={0}
       >
         {children}
       </Paper>
-      {!poll && <AppBar
-        position="fixed"
-        elevation={0}
-        sx={{
-          top: { xs: "auto", sm: 0 },
-          bottom: { xs: 0, sm: "auto" },
-          p: 1,
-          color: "#fff",
-          background: "#000",
-        }}
-      >
-        <Toolbar>
-          <Box sx={{ order: { sm: 2 }, display: "flex" }}>
-            <IconButton
-              color="inherit"
-              size="small"
-              sx={{
-                ml: { xs: -1, sm: 0 },
-                mr: { xs: 0.5, sm: 0 },
-                order: { sm: 3 },
-              }}
-            >
-              {session ? (
-                <Avatar
-                  alt="Profile Picture"
-                  sx={{
-                    background: cyan["A700"],
-                    color: "#000",
-                    width: 35,
-                    fontSize: "16px",
-                    height: 35,
-                  }}
-                >
-                  {getInitials(session?.user?.name).toUpperCase()}
-                </Avatar>
-              ) : (
-                <Link href="/api/auth/signin?callbackUrl=/">
-                  <Button
+      {!poll && (
+        <AppBar
+          position="fixed"
+          elevation={0}
+          sx={{
+            top: { xs: "auto", sm: 0 },
+            bottom: { xs: 0, sm: "auto" },
+            p: 1,
+            color: "#fff",
+            background: "#000",
+          }}
+        >
+          <Toolbar>
+            <Box sx={{ order: { sm: 2 }, display: "flex" }}>
+              <IconButton
+                color="inherit"
+                size="small"
+                sx={{
+                  ml: { xs: -1, sm: 0 },
+                  mr: { xs: 0.5, sm: 0 },
+                  order: { sm: 3 },
+                }}
+              >
+                {session ? (
+                  <Avatar
+                    alt="Profile Picture"
                     sx={{
-                      background: "#fff!important",
-                      textTransform: "none",
+                      background: cyan["A700"],
                       color: "#000",
-                      px: 2,
-                      borderRadius: 5,
+                      width: 35,
+                      fontSize: "16px",
+                      height: 35,
                     }}
-                    size="large"
                   >
-                    Sign in
-                  </Button>
-                </Link>
-              )}
-            </IconButton>
-            <IconButton color="inherit" size="large" sx={{ ml: 0.5, mr: 0.5 }}>
-              <span className="material-symbols-outlined">search</span>
-            </IconButton>
-            <IconButton color="inherit" size="large" sx={{ ml: 0, mr: 0.5 }}>
-              <span className="material-symbols-outlined">poll</span>
-            </IconButton>
-            <IconButton color="inherit" size="large" sx={{ ml: 0, mr: 0.5 }}>
-              <span className="material-symbols-outlined">atr</span>
-            </IconButton>
-          </Box>
-          <Box
-            sx={{
-              order: { xs: 2, sm: 1 },
-              mr: { sm: "auto" },
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-              ml: { xs: "auto", sm: "unset" },
-            }}
-          >
-            <Typography
-              variant="h5"
+                    {getInitials(session?.user?.name).toUpperCase()}
+                  </Avatar>
+                ) : (
+                  <Link href="/api/auth/signin?callbackUrl=/">
+                    <Button
+                      sx={{
+                        background: "#fff!important",
+                        textTransform: "none",
+                        color: "#000",
+                        px: 2,
+                        borderRadius: 5,
+                      }}
+                      size="large"
+                    >
+                      Sign in
+                    </Button>
+                  </Link>
+                )}
+              </IconButton>
+              <IconButton
+                color="inherit"
+                size="large"
+                sx={{ ml: 0.5, mr: 0.5 }}
+              >
+                <span className="material-symbols-outlined">search</span>
+              </IconButton>
+              <IconButton color="inherit" size="large" sx={{ ml: 0, mr: 0.5 }}>
+                <span className="material-symbols-outlined">poll</span>
+              </IconButton>
+              <IconButton color="inherit" size="large" sx={{ ml: 0, mr: 0.5 }}>
+                <span className="material-symbols-outlined">atr</span>
+              </IconButton>
+            </Box>
+            <Box
               sx={{
-                display: { xs: "none", sm: "block" },
-                fontWeight: "900",
+                order: { xs: 2, sm: 1 },
+                mr: { sm: "auto" },
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                ml: { xs: "auto", sm: "unset" },
               }}
             >
-              Popvote
-            </Typography>
-            {session && <CreatePollDialog />}
-          </Box>
-        </Toolbar>
-      </AppBar>}
+              <Typography
+                variant="h5"
+                sx={{
+                  display: { xs: "none", sm: "block" },
+                  fontWeight: "900",
+                }}
+              >
+                Popvote
+              </Typography>
+              {session && <CreatePollDialog />}
+            </Box>
+          </Toolbar>
+        </AppBar>
+      )}
     </React.Fragment>
   );
 }

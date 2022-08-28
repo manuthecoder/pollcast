@@ -1,44 +1,20 @@
 import { Layout } from "../components/Layout";
 import useSWR from "swr";
 // import io from "socket.io-client";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
 import Link from "next/link";
-import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import Dialog from "@mui/material/Dialog";
-import CardMedia from "@mui/material/CardMedia";
-import CardActionArea from "@mui/material/CardActionArea";
+import Alert from "@mui/material/Alert";
 import MuiLink from "@mui/material/Link";
 import Skeleton from "@mui/material/Skeleton";
 import Container from "@mui/material/Container";
+import { ImagePopup } from "../components/Poll/ImagePopup";
+import { Sidebar } from "../components/Poll/Sidebar";
+import { Choice } from "../components/Poll/Choice";
 
-// let socket: any;
-
-function Sidebar() {
-  return (
-    <>
-      <Card
-        sx={{
-          boxShadow: 0,
-          backgroundColor: "#eee",
-          borderRadius: 5,
-          p: 2,
-        }}
-      >
-        <CardContent>
-          <Typography variant="h2">5</Typography>
-          <Typography variant="h6">Votes</Typography>
-        </CardContent>
-      </Card>
-    </>
-  );
-}
-
-function Loading({ width = "100%", height }: any) {
+export function Loading({ width = "100%", height }: any) {
   return (
     <Skeleton
       width={width}
@@ -49,26 +25,7 @@ function Loading({ width = "100%", height }: any) {
   );
 }
 
-function Choice({ choice }: any) {
-  return (
-    <Card sx={{ mb: 2, borderRadius: 5, background: "#eee" }} elevation={0}>
-      <CardActionArea
-        sx={{
-          "& span": {
-            transition: "none!important",
-          },
-        }}
-      >
-        <CardContent>
-          <Typography>{choice.name}</Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
-  );
-}
-
 export default function Vote() {
-  const [open, setOpen] = useState<boolean>(false);
   // useEffect(() => {
   //   socketInitializer();
   // }, []);
@@ -102,41 +59,11 @@ export default function Vote() {
   return (
     <Layout>
       <Box sx={{ p: 5 }}>
-        {data && (
-          <Dialog
-            open={open}
-            scroll="body"
-            onClose={() => setOpen(false)}
-            BackdropProps={{
-              sx: {
-                background: "rgba(0,0,0,0.1)",
-                backdropFilter: "blur(15px)",
-              },
-            }}
-            sx={{
-              "& .MuiDialog-paper": {
-                boxShadow: "none",
-                background: "black",
-                color: "white",
-                borderRadius: 5,
-              },
-            }}
-          >
-            <Box
-              sx={{
-                "& img": {
-                  width: "100%",
-                  maxWidth: { sm: "500px" },
-                },
-              }}
-            >
-              <picture>
-                <img src={data.image} alt="Poll Image" draggable={false} />
-              </picture>
-            </Box>
-          </Dialog>
-        )}
         <Container sx={{ mt: 10 }}>
+          {/* <Alert severity="info" sx={{ mb: 3, mt: -9 }}>
+            This poll is linked to an assignment. Complete the poll in order to
+            finish the assignment
+          </Alert> */}
           <Grid container spacing={2}>
             <Grid item xs={12} sm={7}>
               <Typography variant="h3" sx={{ fontWeight: "900" }}>
@@ -170,60 +97,11 @@ export default function Vote() {
               )}
             </Grid>
             <Grid item xs={12} sm={5}>
+              <ImagePopup data={data} />
               <Sidebar />
             </Grid>
           </Grid>
 
-          {/* {JSON.stringify(data)} */}
-          {data ? (
-            <>
-              {data.image && (
-                <Card
-                  sx={{
-                    width: "100%",
-                    height: "auto",
-                    minHeight: "200px",
-                    background: "#000",
-                    borderRadius: 5,
-                    position: "relative",
-                  }}
-                  elevation={0}
-                >
-                  <CardActionArea onClick={() => setOpen(true)}>
-                    <IconButton
-                      sx={{
-                        position: "absolute",
-                        top: 0,
-                        right: 0,
-                        m: 2,
-                        pointerEvents: "none",
-                        color: "#fff",
-                        backdropFilter: "blur(10px)",
-                        background: "#000",
-                      }}
-                      size="small"
-                    >
-                      <span className="material-symbols-rounded">
-                        fullscreen
-                      </span>
-                    </IconButton>
-                    <CardMedia sx={{ width: "100%", height: "200px" }}>
-                      <picture>
-                        <img
-                          src={data.image}
-                          alt="attached image"
-                          draggable={false}
-                          style={{ width: "100%" }}
-                        />
-                      </picture>
-                    </CardMedia>
-                  </CardActionArea>
-                </Card>
-              )}
-            </>
-          ) : (
-            <Loading height={"100px"} width={"200px"} />
-          )}
           {error && <>An error occured while trying to fetch the poll</>}
         </Container>
       </Box>

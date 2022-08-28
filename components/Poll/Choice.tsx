@@ -7,7 +7,14 @@ import CardActionArea from "@mui/material/CardActionArea";
 export function Choice({ choice }: any) {
   return (
     <Card
-      sx={{ mb: 2, borderRadius: 5, background: "rgba(200,200,200,.3)" }}
+      sx={{
+        mb: 2,
+        borderRadius: 5,
+        background:
+          global.theme === "dark"
+            ? "rgba(200,200,200,.1)"
+            : "rgba(200,200,200,.3)",
+      }}
       elevation={0}
     >
       <CardActionArea

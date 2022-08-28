@@ -17,6 +17,8 @@ import StepConnector, {
   stepConnectorClasses,
 } from "@mui/material/StepConnector";
 
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+
 import { StepIconProps } from "@mui/material/StepIcon";
 import { CreatePollDialog } from "./CreatePollDialog";
 
@@ -91,6 +93,62 @@ function getInitials(name: string) {
   return initials;
 }
 
+function ProfileMenu({ session }: any) {
+  const [open, setOpen] = React.useState<boolean>(false);
+
+  return (
+    <>
+      <SwipeableDrawer
+        anchor="bottom"
+        open={open}
+        PaperProps={{
+          sx: {
+            mx: "auto",
+            maxWidth: "500px",
+            borderRadius: "20px 20px 0 0",
+          },
+        }}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        disableSwipeToOpen
+      >
+        <Box
+          sx={{
+            width: 100,
+            height: "5px",
+            background: "rgba(200,200,200,.3)",
+            borderRadius: 5,
+            my: 3,
+            mx: "auto",
+          }}
+        ></Box>
+
+        <Button
+          onClick={() => {
+            global.setTheme(global.theme === "dark" ? "light" : "dark");
+          }}
+        >
+          Toggle dark mode
+        </Button>
+      </SwipeableDrawer>
+
+      <Avatar
+        alt="Profile Picture"
+        onClick={() => setOpen(true)}
+        sx={{
+          background: cyan["A700"],
+          color: "#000",
+          width: 35,
+          fontSize: "16px",
+          height: 35,
+        }}
+      >
+        {getInitials(session?.user?.name).toUpperCase()}
+      </Avatar>
+    </>
+  );
+}
+
 export function Layout({ poll = false, children }: any) {
   const { data: session }: any = useSession();
   return (
@@ -135,18 +193,7 @@ export function Layout({ poll = false, children }: any) {
                 }}
               >
                 {session ? (
-                  <Avatar
-                    alt="Profile Picture"
-                    sx={{
-                      background: cyan["A700"],
-                      color: "#000",
-                      width: 35,
-                      fontSize: "16px",
-                      height: 35,
-                    }}
-                  >
-                    {getInitials(session?.user?.name).toUpperCase()}
-                  </Avatar>
+                  <ProfileMenu session={session} />
                 ) : (
                   <Link href="/api/auth/signin?callbackUrl=/">
                     <Button

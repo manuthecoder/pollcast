@@ -19,6 +19,7 @@ export default function App({
   });
 
   global.setTheme = setTheme;
+  global.theme = theme;
 
   return (
     <ThemeProvider theme={darkTheme}>

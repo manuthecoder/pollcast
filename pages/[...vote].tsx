@@ -58,8 +58,8 @@ export default function Vote() {
 
   return (
     <Layout>
-      <Box sx={{ p: 5 }}>
-        <Container sx={{ mt: 10 }}>
+      <Box sx={{ p: { xs: 3, sm: 5 } }}>
+        <Container sx={{ mt: { xs: 5, sm: 10 } }}>
           {/* <Alert severity="info" sx={{ mb: 3, mt: -9 }}>
             This poll is linked to an assignment. Complete the poll in order to
             finish the assignment

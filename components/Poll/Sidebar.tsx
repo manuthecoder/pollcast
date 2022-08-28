@@ -32,7 +32,7 @@ export function Sidebar() {
         }}
       >
         <CardContent>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" sx={{ mb: 2 }}>
             More
           </Typography>
           <Button

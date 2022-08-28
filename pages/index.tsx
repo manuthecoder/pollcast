@@ -23,14 +23,14 @@ export default function Component() {
   return (
     <>
       <Layout>
-        <Container>
+        <Container sx={{ p: 3 }}>
           <Typography
             variant="h4"
             gutterBottom
             component="div"
             sx={{
-              mt: { xs: 5, sm: 10 },
-              mb: 5,
+              mt: { xs: 3, sm: 10 },
+              mb: 4,
               pb: 0,
               fontWeight: "900",
             }}
@@ -67,7 +67,14 @@ export default function Component() {
               )}
               {data.map((poll: any, id: number) => (
                 <Link key={id.toString()} href={`/vote/${poll.id}`}>
-                  <Card variant="outlined" sx={{ mb: 2 }}>
+                  <Card
+                    sx={{
+                      mb: 2,
+                      boxShadow: 0,
+                      borderRadius: 5,
+                      background: "#eee",
+                    }}
+                  >
                     <CardActionArea>
                       {poll.image && (
                         <CardMedia>
@@ -87,10 +94,19 @@ export default function Component() {
                         </CardMedia>
                       )}
                       <CardContent>
-                        <Typography variant="h5" component="div" gutterBottom>
+                        <Typography
+                          variant="h5"
+                          component="div"
+                          gutterBottom
+                          sx={{ fontWeight: "900" }}
+                        >
                           {poll.question}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          gutterBottom
+                        >
                           {poll.description}
                         </Typography>
                       </CardContent>

@@ -98,7 +98,10 @@ export function PollCard({ showOptions = false, poll }: any) {
         mb: 2,
         boxShadow: 0,
         borderRadius: 5,
-        background: "rgba(200,200,200,.3)",
+        background:
+          global.theme === "dark"
+            ? "hsl(195, 29%, 11%)"
+            : "rgba(200,200,200,.3)",
       }}
     >
       <Link href={`/vote/${poll.id}`}>

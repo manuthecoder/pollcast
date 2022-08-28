@@ -12,7 +12,7 @@ export function Choice({ choice }: any) {
         borderRadius: 5,
         background:
           global.theme === "dark"
-            ? "rgba(200,200,200,.1)"
+            ? "hsl(195, 29%, 11%)"
             : "rgba(200,200,200,.3)",
       }}
       elevation={0}

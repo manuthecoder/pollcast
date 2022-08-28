@@ -15,6 +15,9 @@ function App({ Component, pageProps: { session, ...pageProps } }: any) {
   const darkTheme = createTheme({
     palette: {
       mode: theme,
+      background: {
+        default: theme === "dark" ? "hsl(195, 29%, 11%)" : "#fff",
+      },
     },
   });
 

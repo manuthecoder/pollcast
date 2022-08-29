@@ -316,7 +316,7 @@ export function CreatePollDialog() {
                     }
                   }}
                   sx={{ my: 1 }}
-                  disabled={options.length >= 6}
+                  disabled={options.length >= 10}
                   id="optionText"
                   label={
                     options.length <= 6 ? "Add an option" : "Maximum 6 options"
@@ -379,7 +379,7 @@ export function CreatePollDialog() {
                     type="button"
                     variant="contained"
                     disableElevation
-                    disabled={options.length >= 6}
+                    disabled={options.length >= 10}
                     sx={{
                       mb: 2,
                       gap: 2,

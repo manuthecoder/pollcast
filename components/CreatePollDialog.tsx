@@ -27,7 +27,7 @@ function Math({ math }: any) {
   return (
     <Button
       className="math"
-      sx={{ textTransform: "none", fontSize: "18px" }}
+      sx={{ textTransform: "none", fontSize: "18px", borderRadius: 8 }}
       onClick={() => {
         const input: any = document.getElementById("optionText");
         input!.value += "{{{ " + math + " }}} ";
@@ -340,7 +340,7 @@ export function CreatePollDialog() {
                 {mathKeyboard && (
                   <Box
                     sx={{
-                      height: "95px",
+                      height: "105px",
                       overflow: "scroll",
                       maxWidth: "100%",
                     }}
@@ -360,7 +360,6 @@ export function CreatePollDialog() {
                     <Math math="\infty" />
                     <Math math="\sqrt[n]{x}" />
                     <Math math="a^b" />
-                    <Math math="\ndv" />
                     <Math math="\overline{AB}" />
                     <Math math="\triangle ABC" />
                     <Math math="\angle ABC" />

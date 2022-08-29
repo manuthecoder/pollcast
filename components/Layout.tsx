@@ -129,9 +129,8 @@ export function Layout({ poll = false, children }: any) {
                 size="small"
                 sx={{
                   "&:hover": { background: "#101010" },
-                  ml: { xs: -1, sm: 0 },
-                  mr: { xs: 0.5, sm: 0 },
                   order: { sm: 3 },
+                  mr: { xs: 0.8, sm: 0 },
                 }}
               >
                 {session ? (
@@ -158,9 +157,7 @@ export function Layout({ poll = false, children }: any) {
                   color="inherit"
                   size="large"
                   sx={{
-                    ml: 0.5,
                     display: { sm: "none" },
-                    mr: 0.5,
                     "&:hover": { background: "#101010" },
                     transition: "none",
                   }}
@@ -172,8 +169,6 @@ export function Layout({ poll = false, children }: any) {
                 color="inherit"
                 size="large"
                 sx={{
-                  ml: 0.5,
-                  mr: 0.5,
                   "&:hover": { background: "#101010" },
                   transition: "none",
                 }}
@@ -187,8 +182,6 @@ export function Layout({ poll = false, children }: any) {
                       color="inherit"
                       size="large"
                       sx={{
-                        ml: 0,
-                        mr: 0.5,
                         "&:hover": { background: "#101010" },
                         transition: "none",
                       }}

@@ -22,6 +22,7 @@ import { useSession } from "next-auth/react";
 // @ts-ignore
 import { InlineMath, BlockMath } from "react-katex";
 const reactStringReplace = require("react-string-replace");
+import "katex/dist/katex.min.css";
 
 function Math({ math }: any) {
   return (

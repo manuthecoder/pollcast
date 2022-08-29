@@ -27,7 +27,7 @@ function Math({ math }: any) {
   return (
     <Button
       className="math"
-      sx={{ textTransform: "none" }}
+      sx={{ textTransform: "none", fontSize: "18px" }}
       onClick={() => {
         const input: any = document.getElementById("optionText");
         input!.value += "{{{ " + math + " }}} ";
@@ -234,7 +234,7 @@ export function CreatePollDialog() {
                 <Box
                   sx={{
                     mb: 2,
-                    height: "200px",
+                    height: "130px",
                     overflowY: "scroll",
                     borderRadius: 5,
                     background: "rgba(200,200,200,.3)",
@@ -290,7 +290,7 @@ export function CreatePollDialog() {
                       animation="wave"
                       sx={{
                         p: 2,
-                        height: "200px",
+                        height: "130px",
                         display: "flex",
                         width: "100%",
                         borderRadius: 5,
@@ -331,16 +331,16 @@ export function CreatePollDialog() {
                     size="small"
                     sx={{ textTransform: "none" }}
                     onClick={() => {
-                      setMathKeyboard(true);
+                      setMathKeyboard(!mathKeyboard);
                     }}
                   >
-                    Show math toolbar
+                    Toggle math toolbar
                   </Button>
                 </Typography>
                 {mathKeyboard && (
                   <Box
                     sx={{
-                      height: "65px",
+                      height: "95px",
                       overflow: "scroll",
                       maxWidth: "100%",
                     }}
@@ -360,9 +360,19 @@ export function CreatePollDialog() {
                     <Math math="\infty" />
                     <Math math="\sqrt[n]{x}" />
                     <Math math="a^b" />
+                    <Math math="\ndv" />
+                    <Math math="\overline{AB}" />
+                    <Math math="\triangle ABC" />
+                    <Math math="\angle ABC" />
+                    <Math math="90^{\circ}" />
                     <Math math="a_b" />
                     <Math math="\deg(f)" />
                     <Math math="x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" />
+                    <Math math="\sum_{n=1}^{\infty}a_n" />
+                    <Math math="\prod_{n=1}^{\infty}a_n" />
+                    <Math math="\int" />
+                    <Math math="\iint" />
+                    <Math math="\iiint" />
                   </Box>
                 )}
                 <Box sx={{ display: "flex" }}>

@@ -119,7 +119,7 @@ export function Layout({ poll = false, children }: any) {
             bottom: { xs: 0, sm: "auto" },
             p: 1,
             color: "#fff",
-            background: "#000",
+            background: global.theme === "dark" ? "hsl(195, 29%, 10%)" : "#000",
           }}
         >
           <Toolbar>
@@ -153,6 +153,20 @@ export function Layout({ poll = false, children }: any) {
                   </Link>
                 )}
               </IconButton>
+              <Link href="/">
+                <IconButton
+                  color="inherit"
+                  size="large"
+                  sx={{
+                    ml: 0.5,
+                    mr: 0.5,
+                    "&:hover": { background: "#101010" },
+                    transition: "none",
+                  }}
+                >
+                  <span className="material-symbols-outlined">home</span>
+                </IconButton>
+              </Link>
               <IconButton
                 color="inherit"
                 size="large"

@@ -16,7 +16,8 @@ function App({ Component, pageProps: { session, ...pageProps } }: any) {
     palette: {
       mode: theme,
       background: {
-        default: theme === "dark" ? "hsl(195, 29%, 11%)" : "#fff",
+        default: theme === "dark" ? "hsl(195, 29%, 5%)" : "#fff",
+        paper: theme === "dark" ? "hsl(195, 29%, 5%)" : "#fff",
       },
     },
   });

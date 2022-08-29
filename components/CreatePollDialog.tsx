@@ -86,7 +86,10 @@ export function CreatePollDialog() {
         disableRipple
         sx={{
           borderRadius: 5,
-          background: "#101010 !important",
+          background:
+            global.theme === "dark"
+              ? "hsl(195, 29%, 15%)!important"
+              : "#101010!important",
           color: "#fff",
           boxShadow: "0px !important",
           transition: "all .2s",

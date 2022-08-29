@@ -19,6 +19,28 @@ import { TransitionProps } from "@mui/material/transitions";
 import SwipeableViews from "react-swipeable-views";
 import { PopvoteConnector, PopvoteStepIcon } from "./Layout";
 import { useSession } from "next-auth/react";
+// @ts-ignore
+import { InlineMath, BlockMath } from "react-katex";
+const reactStringReplace = require("react-string-replace");
+
+function Math({ math }: any) {
+  return (
+    <Button
+      className="math"
+      sx={{ textTransform: "none" }}
+      onClick={() => {
+        const input: any = document.getElementById("optionText");
+        input!.value += "{{" + math + "}} ";
+        setTimeout(() => {
+          input.focus();
+          input!.selectionStart = input!.selectionEnd = input!.value.length;
+        }, 100);
+      }}
+    >
+      <InlineMath math={math} />
+    </Button>
+  );
+}
 
 export function CreatePollDialog() {
   const [open, setOpen] = React.useState(false);
@@ -26,6 +48,7 @@ export function CreatePollDialog() {
   const [options, setOptions] = React.useState<any>([]);
   const [openQr, setOpenQr] = React.useState(false);
   const steps = ["Options", "Add choices", "Share!"];
+  const [mathKeyboard, setMathKeyboard] = React.useState(false);
   const [step, setStep] = React.useState(0);
   const [url, setUrl] = React.useState("https://popvote.ml/polls/1");
   const { data: session }: any = useSession();
@@ -218,31 +241,47 @@ export function CreatePollDialog() {
                   }}
                   id="optionList"
                 >
-                  {options.map((option: any, index: any) => (
-                    <Box
-                      sx={{
-                        p: 2,
-                        borderBottom: "1px solid rgba(200,200,200,.3)",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                      key={index.toString()}
-                    >
-                      {option}
-                      <IconButton
-                        sx={{ ml: "auto" }}
-                        onClick={() => {
-                          setOptions(
-                            options.filter(
-                              (o: string, i: number) => i !== index
-                            )
-                          );
+                  {options.map((option: any, index: any) => {
+                    const str = option;
+                    const regex = /\{{(.*?)\}}/g;
+                    const txt = reactStringReplace(
+                      str,
+                      regex,
+                      (match: any, i: number) => (
+                        <div className="math">
+                          <InlineMath>{match}</InlineMath>
+                        </div>
+                      )
+                    );
+
+                    return (
+                      <Box
+                        sx={{
+                          p: 2,
+                          borderBottom: "1px solid rgba(200,200,200,.3)",
+                          display: "flex",
+                          alignItems: "center",
                         }}
+                        key={index.toString()}
                       >
-                        <span className="material-symbols-rounded">delete</span>
-                      </IconButton>
-                    </Box>
-                  ))}
+                        {txt}
+                        <IconButton
+                          sx={{ ml: "auto" }}
+                          onClick={() => {
+                            setOptions(
+                              options.filter(
+                                (o: string, i: number) => i !== index
+                              )
+                            );
+                          }}
+                        >
+                          <span className="material-symbols-rounded">
+                            delete
+                          </span>
+                        </IconButton>
+                      </Box>
+                    );
+                  })}
                   {options.length === 0 && (
                     <Skeleton
                       variant="rectangular"
@@ -285,7 +324,46 @@ export function CreatePollDialog() {
                 <Typography variant="body2" sx={{ textAlign: "right" }}>
                   Pro tip: Wrap your math around two curly braces ( &#x7B;&#x7B;
                   y = mx + b&#x7D;&#x7D; ) to render it as a math equation.
+                  Equations follow the LaTeX syntax.{" "}
+                  <Button
+                    variant="text"
+                    size="small"
+                    sx={{ textTransform: "none" }}
+                    onClick={() => {
+                      setMathKeyboard(true);
+                    }}
+                  >
+                    Show math toolbar
+                  </Button>
                 </Typography>
+                {mathKeyboard && (
+                  <Box
+                    sx={{
+                      height: "65px",
+                      overflow: "scroll",
+                      maxWidth: "100%",
+                    }}
+                  >
+                    <Math math="\sqrt{x}" />
+                    <Math math="\frac{x}{y}" />
+                    <Math math="\pi" />
+                    <Math math="\pm" />
+                    <Math math="\times" />
+                    <Math math="\cdot" />
+                    <Math math="\div" />
+                    <Math math="<" />
+                    <Math math=">" />
+                    <Math math="\le" />
+                    <Math math="\ge" />
+                    <Math math="\approx" />
+                    <Math math="\infty" />
+                    <Math math="\sqrt[n]{x}" />
+                    <Math math="a^b" />
+                    <Math math="a_b" />
+                    <Math math="\deg(f)" />
+                    <Math math="x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}" />
+                  </Box>
+                )}
                 <Box sx={{ display: "flex" }}>
                   <Button
                     type="button"

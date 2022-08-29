@@ -30,7 +30,7 @@ function Math({ math }: any) {
       sx={{ textTransform: "none" }}
       onClick={() => {
         const input: any = document.getElementById("optionText");
-        input!.value += "{{" + math + "}} ";
+        input!.value += "{{{" + math + "}}} ";
         setTimeout(() => {
           input.focus();
           input!.selectionStart = input!.selectionEnd = input!.value.length;
@@ -243,7 +243,7 @@ export function CreatePollDialog() {
                 >
                   {options.map((option: any, index: any) => {
                     const str = option;
-                    const regex = /\{{(.*?)\}}/g;
+                    const regex = /\{{{(.*?)\}}}/g;
                     const txt = reactStringReplace(
                       str,
                       regex,
@@ -322,9 +322,9 @@ export function CreatePollDialog() {
                   }
                 />
                 <Typography variant="body2" sx={{ textAlign: "right" }}>
-                  Pro tip: Wrap your math around two curly braces ( &#x7B;&#x7B;
-                  y = mx + b&#x7D;&#x7D; ) to render it as a math equation.
-                  Equations follow the LaTeX syntax.{" "}
+                  Pro tip: Wrap your math around three curly braces (
+                  &#x7B;&#x7B;&#x7B; y = mx + b&#x7D;&#x7D;&#x7D; ) to render it
+                  as a math equation. Equations follow the LaTeX syntax.{" "}
                   <Button
                     variant="text"
                     size="small"

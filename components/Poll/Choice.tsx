@@ -13,7 +13,7 @@ const reactStringReplace = require("react-string-replace");
 
 export function Choice({ choice }: any) {
   const str = choice.name;
-  const regex = /\{{(.*?)\}}/g;
+  const regex = /\{{{(.*?)\}}}/g;
   const txt = reactStringReplace(str, regex, (match: any, i: number) => (
     <div className="math">
       <InlineMath>{match}</InlineMath>

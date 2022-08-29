@@ -1,4 +1,4 @@
-*:not(.material-symbols-outlined, .material-symbols-rounded) {
+*:not(.material-symbols-outlined, .material-symbols-rounded, .math, .math *) {
   font-family: "IBM Plex Sans", sans-serif !important;
 }
 
@@ -12,4 +12,11 @@ body {
 }
 .MuiTouchRipple-child {
   filter: opacity(0.2) !important;
+}
+
+.math {
+  padding: 3px;
+  display: inline;
+  border-radius: 4px;
+  background-color: rgba(200, 200, 200, 0.3);
 }

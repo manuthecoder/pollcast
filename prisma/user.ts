@@ -13,6 +13,9 @@ export const getFeed = async (userId: string | null) => {
     ...(!userId && {
       take: 20,
     }),
+    include: {
+      user: true,
+    },
   });
   return polls;
 };

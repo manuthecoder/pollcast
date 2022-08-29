@@ -123,6 +123,9 @@ export function PollCard({ showOptions = false, poll }: any) {
           <Typography variant="body2" color="text.secondary" gutterBottom>
             {poll.description}
           </Typography>
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            Asked by {poll.user.name}
+          </Typography>
         </CardActionArea>
       </Link>
 

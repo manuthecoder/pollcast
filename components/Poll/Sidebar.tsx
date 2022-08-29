@@ -9,7 +9,10 @@ export function Sidebar() {
       <Card
         sx={{
           boxShadow: 0,
-          backgroundColor: "rgba(200,200,200,.3)",
+          backgroundColor:
+            global.theme === "dark"
+              ? "hsl(195, 29%, 11%)"
+              : "rgba(200,200,200,.3)",
           borderRadius: 5,
           p: 1.5,
           mb: 2,
@@ -25,7 +28,10 @@ export function Sidebar() {
       <Card
         sx={{
           boxShadow: 0,
-          backgroundColor: "rgba(200,200,200,.3)",
+          backgroundColor:
+            global.theme === "dark"
+              ? "hsl(195, 29%, 11%)"
+              : "rgba(200,200,200,.3)",
           borderRadius: 5,
           p: 1.5,
           mb: 2,
@@ -40,6 +46,7 @@ export function Sidebar() {
             disableElevation
             sx={{
               background: "#000!important",
+              color: "#fff",
               mb: 1,
               borderRadius: 9,
               textTransform: "none",
@@ -55,6 +62,7 @@ export function Sidebar() {
             disableElevation
             sx={{
               background: "#000!important",
+              color: "#fff",
               borderRadius: 9,
               textTransform: "none",
               gap: 2,
@@ -70,6 +78,7 @@ export function Sidebar() {
             disableElevation
             sx={{
               background: "#000!important",
+              color: "#fff",
               borderRadius: 9,
               textTransform: "none",
               gap: 2,

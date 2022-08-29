@@ -210,6 +210,7 @@ export function CreatePollDialog() {
                         background: "#202020",
                       },
                     }}
+                    disabled={loading}
                     variant="contained"
                     disableElevation
                   >

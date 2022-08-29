@@ -91,7 +91,7 @@ export function CreatePollDialog() {
               ? "hsl(195, 29%, 15%)!important"
               : "#101010!important",
           color: "#fff",
-          boxShadow: "0px !important",
+          boxShadow: "none !important",
           transition: "all .2s",
           "&:active": {
             transform: "scale(0.9)",

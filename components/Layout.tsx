@@ -159,6 +159,7 @@ export function Layout({ poll = false, children }: any) {
                   size="large"
                   sx={{
                     ml: 0.5,
+                    display: { sm: "none" },
                     mr: 0.5,
                     "&:hover": { background: "#101010" },
                     transition: "none",

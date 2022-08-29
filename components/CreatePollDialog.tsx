@@ -284,6 +284,10 @@ export function CreatePollDialog() {
                     options.length <= 6 ? "Add an option" : "Maximum 6 options"
                   }
                 />
+                <Typography variant="body2" sx={{ textAlign: "right" }}>
+                  Pro tip: Wrap your math around two curly braces ( &#x7B;&#x7B;
+                  y = mx + b&#x7D;&#x7D; ) to render it as a math equation.
+                </Typography>
                 <Box sx={{ display: "flex" }}>
                   <Button
                     type="button"

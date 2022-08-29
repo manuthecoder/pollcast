@@ -18,5 +18,7 @@ body {
   padding: 3px;
   display: inline;
   border-radius: 4px;
+}
+.math:hover {
   background-color: rgba(200, 200, 200, 0.3);
 }

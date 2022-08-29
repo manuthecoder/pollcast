@@ -30,7 +30,7 @@ function Math({ math }: any) {
       sx={{ textTransform: "none" }}
       onClick={() => {
         const input: any = document.getElementById("optionText");
-        input!.value += "{{{" + math + "}}} ";
+        input!.value += "{{{ " + math + " }}} ";
         setTimeout(() => {
           input.focus();
           input!.selectionStart = input!.selectionEnd = input!.value.length;

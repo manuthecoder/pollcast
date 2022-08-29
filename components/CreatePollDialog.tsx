@@ -64,11 +64,9 @@ export function CreatePollDialog() {
           user: session.id,
           choices: JSON.stringify(options),
         });
-        alert(params);
         fetch("/api/createPoll?" + params)
           .then((res) => res.json())
           .then((data: any) => {
-            alert(JSON.stringify(data));
             setLoading(false);
             setUrl("https://popvote.ml/vote/" + data.id);
             setStep((prevActiveStep) => prevActiveStep + 1);

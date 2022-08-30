@@ -33,22 +33,41 @@ function RenderPoll({ data }: any) {
       return { id: c.id, votes: c.votes };
     })
   );
-  const updateVotes = () => {
+  const updateVotes = async () => {
     const url =
       "/api/fetchPoll?" +
       new URLSearchParams({
         id: window.location.href.split("/vote/")[1],
       });
-    fetch(url)
-      .then((res) => res.json())
-      .then((res) => {
-        // alert(1);
-        setVotes(
-          data.choices.map((c: any) => {
-            return { id: c.id, votes: c.votes };
+
+    toast.promise(
+      new Promise((resolve: any, reject: any) => {
+        fetch(url)
+          .then((res) => res.json())
+          .then((res) => {
+            setVotes([
+              ...res.choices.map((c: any) => {
+                return { id: c.id, votes: c.votes };
+              }),
+            ]);
+            resolve();
           })
-        );
-      });
+          .catch((err) => reject(err));
+      }),
+      {
+        loading: "Submitting...",
+        success: "Vote submitted",
+        error:
+          "On no! Something went wrong while trying to submit your vote. Try reloading the page",
+      },
+      {
+        style: {
+          borderRadius: "17px",
+          background: "#333",
+          color: "#fff",
+        },
+      }
+    );
   };
   const { data: session }: any = useSession();
 
@@ -112,7 +131,7 @@ function RenderPoll({ data }: any) {
             <Grid item xs={12} sm={5}>
               <ImagePopup data={data} />
               <Sidebar
-                voteCount={data.choices
+                voteCount={votes
                   .map((item: any) => item.votes.length)
                   .reduce((prev: number, next: number) => prev + next)}
               />
@@ -140,7 +159,7 @@ export default function Vote() {
 
   return (
     <>
-      {data ? <RenderPoll data={data} /> : <>Loading..</>}
+      {data ? <RenderPoll data={data} /> : <>Loading...</>}
       {error && <>An error occured while trying to fetch the poll</>}
     </>
   );

@@ -121,11 +121,14 @@ export function CreatePollDialog() {
           },
           textTransform: "none",
           gap: 2,
+          "& .hide-on-mobile": {
+            display: { xs: "none", sm: "inline" },
+          },
         }}
         aria-label="add"
       >
         <span className="material-symbols-rounded">edit</span>
-        Create
+        <span className="hide-on-mobile">Create</span>
       </Fab>
       <SwipeableDrawer
         anchor="bottom"

@@ -7,6 +7,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import { MathComponent } from "mathjax-react";
 import NoSsr from "@mui/material/NoSsr";
 import "katex/dist/katex.min.css";
+import LinearProgress from "@mui/material/LinearProgress";
 // @ts-ignore
 import { InlineMath, BlockMath } from "react-katex";
 const reactStringReplace = require("react-string-replace");
@@ -55,6 +56,7 @@ export function Choice({ choice, setVote, voted, session, updateVotes }: any) {
           ...(voted && {
             pointerEvents: "none",
           }),
+          position: "relative",
           ...(voted === choice.id && {
             borderRadius: 4,
             background:
@@ -65,6 +67,16 @@ export function Choice({ choice, setVote, voted, session, updateVotes }: any) {
         }}
         elevation={0}
       >
+        {voted && (
+          <LinearProgress
+            sx={{
+              height: "100%",
+              width: "100%",
+              position: "absolute",
+              top: 0,
+            }}
+          />
+        )}
         <CardActionArea
           disabled={voted}
           sx={{

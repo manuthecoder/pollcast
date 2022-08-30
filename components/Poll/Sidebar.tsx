@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 
-export function Sidebar() {
+export function Sidebar({ voteCount }: { voteCount: number }) {
   return (
     <>
       <Card
@@ -20,7 +20,7 @@ export function Sidebar() {
       >
         <CardContent>
           <Typography variant="h2" sx={{ mb: 1 }}>
-            5
+            {voteCount.toString()}
           </Typography>
           <Typography variant="h5">Votes</Typography>
         </CardContent>

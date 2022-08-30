@@ -31,8 +31,56 @@ export const findPoll = async (id: any) => {
   const user = await prisma.poll.findUnique({
     where: { id: id },
     include: {
-      choices: true, // Return all fields
+      choices: {
+        include: {
+          votes: {
+            select: {
+              user: {
+                select: {
+                  image: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      }, // Return all fields
       user: true,
+    },
+  });
+  return user;
+};
+
+export const vote = async (
+  pollId: string,
+  choiceId: string,
+  userId: string
+) => {
+  const poll = await prisma.vote.create({
+    data: {
+      choice: {
+        connect: {
+          id: choiceId,
+        },
+      },
+      poll: {
+        connect: {
+          id: pollId,
+        },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+  const user = await prisma.account.findUnique({
+    where: { id: userId },
+    select: {
+      name: true,
+      image: true,
+      id: true,
     },
   });
   return user;

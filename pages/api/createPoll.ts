@@ -8,7 +8,6 @@ const handler = async (req: any, res: any) => {
     user: req.query.user,
     choices: JSON.parse(req.query.choices),
   });
-  console.log(id);
   res.status(200).json(id);
 };
 export default handler;

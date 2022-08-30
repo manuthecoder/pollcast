@@ -20,7 +20,6 @@ export async function createAccount(name: string, email: string) {
 
 export default async function handle(req: any, res: any) {
   const user = await getUser(req.query.id);
-  console.log(user);
   res.status(200).json(user);
 
   //   try {

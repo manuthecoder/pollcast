@@ -1,18 +1,19 @@
-import { Layout } from "../../components/Layout";
 import useSWR from "swr";
+import { Layout } from "../../components/Layout";
 // import io from "socket.io-client";
-import { useEffect } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "next/link";
+import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Alert from "@mui/material/Alert";
 import MuiLink from "@mui/material/Link";
 import Skeleton from "@mui/material/Skeleton";
-import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useState } from "react";
+import { Choice } from "../../components/Poll/Choice";
 import { ImagePopup } from "../../components/Poll/ImagePopup";
 import { Sidebar } from "../../components/Poll/Sidebar";
-import { Choice } from "../../components/Poll/Choice";
+import toast from "react-hot-toast";
 
 export function Loading({ mb = false, width = "100%", height }: any) {
   return (
@@ -25,36 +26,31 @@ export function Loading({ mb = false, width = "100%", height }: any) {
   );
 }
 
-export default function Vote() {
-  // useEffect(() => {
-  //   socketInitializer();
-  // }, []);
-
-  // const socketInitializer = async () => {
-  //   // We just call it because we don't need anything else out of it
-  //   await fetch("/api/socket");
-
-  //   socket = io();
-
-  //   socket.on("newIncomingMessage", (msg: any) => {
-  //     alert(msg);
-  //   });
-  // };
-
-  // const sendMessage = async (msg: string) => {
-  //   socket.emit("createdMessage", msg);
-  //   // alert("Sent!");
-  // };
-
-  const url =
-    "/api/fetchPoll?" +
-    new URLSearchParams({
-      id: window.location.href.split("/vote/")[1],
-    });
-  // alert(url);
-  const { error, data } = useSWR(url, () =>
-    fetch(url).then((res) => res.json())
+function RenderPoll({ data }: any) {
+  const [voted, setVote] = useState<any>(false);
+  const [votes, setVotes] = useState<any>(
+    data.choices.map((c: any) => {
+      return { id: c.id, votes: c.votes };
+    })
   );
+  const updateVotes = () => {
+    const url =
+      "/api/fetchPoll?" +
+      new URLSearchParams({
+        id: window.location.href.split("/vote/")[1],
+      });
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => {
+        // alert(1);
+        setVotes(
+          data.choices.map((c: any) => {
+            return { id: c.id, votes: c.votes };
+          })
+        );
+      });
+  };
+  const { data: session }: any = useSession();
 
   return (
     <Layout>
@@ -91,7 +87,18 @@ export default function Vote() {
               {data ? (
                 <>
                   {data.choices.map((choice: any, key: string) => (
-                    <Choice choice={choice} key={key.toString()} />
+                    <Choice
+                      updateVotes={updateVotes}
+                      key={key.toString()}
+                      choice={choice}
+                      // Currently selected choice
+                      voted={voted}
+                      setVote={setVote}
+                      // Votes
+                      votes={votes}
+                      // Session
+                      session={session}
+                    />
                   ))}
                 </>
               ) : (
@@ -104,13 +111,37 @@ export default function Vote() {
             </Grid>
             <Grid item xs={12} sm={5}>
               <ImagePopup data={data} />
-              <Sidebar />
+              <Sidebar
+                voteCount={data.choices
+                  .map((item: any) => item.votes.length)
+                  .reduce((prev: number, next: number) => prev + next)}
+              />
             </Grid>
           </Grid>
-
-          {error && <>An error occured while trying to fetch the poll</>}
         </Container>
       </Box>
     </Layout>
+  );
+}
+
+export default function Vote() {
+  const [voted, setVote] = useState<any>(false);
+  const votes = [];
+
+  const url =
+    "/api/fetchPoll?" +
+    new URLSearchParams({
+      id: window.location.href.split("/vote/")[1],
+    });
+  // alert(url);
+  const { error, data } = useSWR(url, () =>
+    fetch(url).then((res) => res.json())
+  );
+
+  return (
+    <>
+      {data ? <RenderPoll data={data} /> : <>Loading..</>}
+      {error && <>An error occured while trying to fetch the poll</>}
+    </>
   );
 }

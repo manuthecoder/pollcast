@@ -6,6 +6,7 @@ import Head from "next/head";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Cookies from "js-cookie";
+import { Toaster } from "react-hot-toast";
 
 function App({ Component, pageProps: { session, ...pageProps } }: any) {
   const [theme, setDarkMode] = React.useState<any>(
@@ -37,6 +38,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: any) {
           <title>Popvote</title>
           <meta name="theme-color" content="#000000" />
         </Head>
+        <Toaster />
         <NoSsr>
           <Component {...pageProps} />
         </NoSsr>

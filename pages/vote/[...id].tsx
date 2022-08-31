@@ -38,11 +38,7 @@ function RenderPoll({ data }: any) {
   useEffect(() => {
     let cid = votes
       .map((r: any) => {
-        if (
-          r.votes.find(
-            (user: any) => user.user.id === "630bd82f796abf062ec11cb9"
-          )
-        ) {
+        if (r.votes.find((user: any) => user.user.id === session.id)) {
           return r.id;
         }
       })

@@ -14,7 +14,15 @@ const reactStringReplace = require("react-string-replace");
 import { cyan } from "@mui/material/colors";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export function Choice({ choice, setVote, voted, session, updateVotes }: any) {
+export function Choice({
+  i,
+  choice,
+  setVote,
+  voted,
+  session,
+  votes,
+  updateVotes,
+}: any) {
   const str = choice.name;
   const regex = /\{{{(.*?)\}}}/g;
   const txt = reactStringReplace(str, regex, (match: any, i: number) => (
@@ -24,6 +32,9 @@ export function Choice({ choice, setVote, voted, session, updateVotes }: any) {
   ));
   const [loading, setLoading] = React.useState(false);
 
+  const totalVotes = votes
+    .map((item: any) => item.votes.length)
+    .reduce((prev: number, next: number) => prev + next);
   return (
     <NoSsr>
       <Card
@@ -69,13 +80,33 @@ export function Choice({ choice, setVote, voted, session, updateVotes }: any) {
       >
         {voted && (
           <LinearProgress
+            variant="determinate"
+            value={(votes[i].votes.length / totalVotes) * 100}
             sx={{
+              opacity: 0.5,
               height: "100%",
+              "& *": {
+                // borderRadius: 3,
+              },
               width: "100%",
               position: "absolute",
               top: 0,
             }}
           />
+        )}
+        {voted && (
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              position: "absolute",
+              right: 20,
+              top: "50%",
+              transform: "translateY(-50%)",
+            }}
+          >
+            {Math.round((votes[i].votes.length / totalVotes) * 100)}%
+          </Typography>
         )}
         <CardActionArea
           disabled={voted}

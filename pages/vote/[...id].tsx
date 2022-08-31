@@ -55,8 +55,8 @@ function RenderPoll({ data }: any) {
           .catch((err) => reject(err));
       }),
       {
-        loading: "Submitting...",
-        success: "Vote submitted",
+        loading: "Updating...",
+        success: "Updated poll results",
         error:
           "On no! Something went wrong while trying to submit your vote. Try reloading the page",
       },
@@ -69,6 +69,9 @@ function RenderPoll({ data }: any) {
       }
     );
   };
+  // Update votes
+  document.onfocus = updateVotes;
+
   const { data: session }: any = useSession();
 
   return (
@@ -107,6 +110,7 @@ function RenderPoll({ data }: any) {
                 <>
                   {data.choices.map((choice: any, key: string) => (
                     <Choice
+                      i={key}
                       updateVotes={updateVotes}
                       key={key.toString()}
                       choice={choice}

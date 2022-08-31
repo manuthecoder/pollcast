@@ -33,44 +33,64 @@ function RenderPoll({ data }: any) {
       return { id: c.id, votes: c.votes };
     })
   );
-  const updateVotes = async () => {
+  const debounce = (func: Function, wait: number) => {
+    let timeout: any;
+
+    return function executedFunction(...args: any[]) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+  const updateVotes = async (showToast: any = true) => {
     const url =
       "/api/fetchPoll?" +
       new URLSearchParams({
         id: window.location.href.split("/vote/")[1],
       });
-
-    toast.promise(
-      new Promise((resolve: any, reject: any) => {
-        fetch(url)
-          .then((res) => res.json())
-          .then((res) => {
-            setVotes([
-              ...res.choices.map((c: any) => {
-                return { id: c.id, votes: c.votes };
-              }),
-            ]);
-            resolve();
-          })
-          .catch((err) => reject(err));
-      }),
-      {
-        loading: "Updating...",
-        success: "Updated poll results",
-        error:
-          "On no! Something went wrong while trying to submit your vote. Try reloading the page",
-      },
-      {
-        style: {
-          borderRadius: "17px",
-          background: "#333",
-          color: "#fff",
+    const promise = new Promise((resolve: any, reject: any) => {
+      fetch(url)
+        .then((res) => res.json())
+        .then((res) => {
+          setVotes([
+            ...res.choices.map((c: any) => {
+              return { id: c.id, votes: c.votes };
+            }),
+          ]);
+          resolve();
+        })
+        .catch((err) => reject(err));
+    });
+    if (showToast) {
+      toast.promise(
+        promise,
+        {
+          loading: "Updating...",
+          success: "Updated poll results",
+          error:
+            "On no! Something went wrong while trying to submit your vote. Try reloading the page",
         },
-      }
-    );
+        {
+          style: {
+            borderRadius: "17px",
+            background: "#333",
+            color: "#fff",
+          },
+        }
+      );
+    }
   };
   // Update votes
-  document.onfocus = updateVotes;
+
+  document.onfocus = debounce(updateVotes, 250);
+
+  var returnedFunction = debounce(() => updateVotes(false), 250);
+
+  window.addEventListener("click", returnedFunction);
 
   const { data: session }: any = useSession();
 

@@ -103,6 +103,9 @@ export function Choice({
               right: 20,
               top: "50%",
               transform: "translateY(-50%)",
+              ...(voted === choice.id && {
+                mr: 3.5,
+              }),
             }}
           >
             {Math.round((votes[i].votes.length / totalVotes) * 100)}%

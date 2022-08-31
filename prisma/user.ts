@@ -39,6 +39,7 @@ export const findPoll = async (id: any) => {
                 select: {
                   image: true,
                   name: true,
+                  id: true,
                 },
               },
             },

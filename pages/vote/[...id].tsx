@@ -9,7 +9,7 @@ import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Choice } from "../../components/Poll/Choice";
 import { ImagePopup } from "../../components/Poll/ImagePopup";
 import { Sidebar } from "../../components/Poll/Sidebar";
@@ -33,6 +33,25 @@ function RenderPoll({ data }: any) {
       return { id: c.id, votes: c.votes };
     })
   );
+  const { data: session }: any = useSession();
+
+  useEffect(() => {
+    let cid = votes
+      .map((r: any) => {
+        if (
+          r.votes.find(
+            (user: any) => user.user.id === "630bd82f796abf062ec11cb9"
+          )
+        ) {
+          return r.id;
+        }
+      })
+      .filter((e: any) => e);
+
+    if (cid[0]) {
+      setVote(cid[0]);
+    }
+  }, [session.id, votes]);
   const debounce = (func: Function, wait: number) => {
     let timeout: any;
 
@@ -91,8 +110,6 @@ function RenderPoll({ data }: any) {
   var returnedFunction = debounce(() => updateVotes(false), 250);
 
   window.addEventListener("click", returnedFunction);
-
-  const { data: session }: any = useSession();
 
   return (
     <Layout>

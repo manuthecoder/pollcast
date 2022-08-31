@@ -36,18 +36,20 @@ function RenderPoll({ data }: any) {
   const { data: session }: any = useSession();
 
   useEffect(() => {
-    let cid = votes
-      .map((r: any) => {
-        if (r.votes.find((user: any) => user.user.id === session.id)) {
-          return r.id;
-        }
-      })
-      .filter((e: any) => e);
+    if (session) {
+      let cid = votes
+        .map((r: any) => {
+          if (r.votes.find((user: any) => user.user.id === session.id)) {
+            return r.id;
+          }
+        })
+        .filter((e: any) => e);
 
-    if (cid[0]) {
-      setVote(cid[0]);
+      if (cid[0]) {
+        setVote(cid[0]);
+      }
     }
-  }, [session.id, votes]);
+  }, [session, votes]);
   const debounce = (func: Function, wait: number) => {
     let timeout: any;
 
@@ -102,10 +104,8 @@ function RenderPoll({ data }: any) {
   // Update votes
 
   document.onfocus = debounce(updateVotes, 250);
-
   var returnedFunction = debounce(() => updateVotes(false), 250);
-
-  window.addEventListener("click", returnedFunction);
+  document.body.addEventListener("focus", returnedFunction);
 
   return (
     <Layout>

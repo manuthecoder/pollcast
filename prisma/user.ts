@@ -38,7 +38,6 @@ export const findPoll = async (id: any) => {
               user: {
                 select: {
                   image: true,
-                  name: true,
                   id: true,
                 },
               },
@@ -46,7 +45,12 @@ export const findPoll = async (id: any) => {
           },
         },
       }, // Return all fields
-      user: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
     },
   });
   return user;

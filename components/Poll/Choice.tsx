@@ -13,6 +13,7 @@ import { InlineMath, BlockMath } from "react-katex";
 const reactStringReplace = require("react-string-replace");
 import { cyan } from "@mui/material/colors";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export function Choice({
   i,
@@ -39,6 +40,10 @@ export function Choice({
     <NoSsr>
       <Card
         onClick={() => {
+          if (!session) {
+            signIn();
+            return false;
+          }
           setLoading(true);
           fetch(
             "/api/vote?" +

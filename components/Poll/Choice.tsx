@@ -1,19 +1,18 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
-import CardContent from "@mui/material/CardContent";
+import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
-import { MathComponent } from "mathjax-react";
-import NoSsr from "@mui/material/NoSsr";
-import "katex/dist/katex.min.css";
+import CardContent from "@mui/material/CardContent";
 import LinearProgress from "@mui/material/LinearProgress";
-// @ts-ignore
-import { InlineMath, BlockMath } from "react-katex";
-const reactStringReplace = require("react-string-replace");
-import { cyan } from "@mui/material/colors";
+import NoSsr from "@mui/material/NoSsr";
+import Typography from "@mui/material/Typography";
+import "katex/dist/katex.min.css";
+import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { cyan } from "@mui/material/colors";
+import { signIn } from "next-auth/react";
+// @ts-ignore
+import { InlineMath } from "react-katex";
+const reactStringReplace = require("react-string-replace");
 
 export function Choice({
   i,

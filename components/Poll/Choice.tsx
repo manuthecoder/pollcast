@@ -2,14 +2,14 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
+import CircularProgress from "@mui/material/CircularProgress";
+import { cyan } from "@mui/material/colors";
 import LinearProgress from "@mui/material/LinearProgress";
 import NoSsr from "@mui/material/NoSsr";
 import Typography from "@mui/material/Typography";
 import "katex/dist/katex.min.css";
-import React from "react";
-import CircularProgress from "@mui/material/CircularProgress";
-import { cyan } from "@mui/material/colors";
 import { signIn } from "next-auth/react";
+import React from "react";
 // @ts-ignore
 import { InlineMath } from "react-katex";
 const reactStringReplace = require("react-string-replace");

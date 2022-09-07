@@ -13,6 +13,8 @@ import React from "react";
 // @ts-ignore
 import { InlineMath } from "react-katex";
 const reactStringReplace = require("react-string-replace");
+const Filter = require("bad-words"),
+  filter = new Filter();
 
 export function Choice({
   i,
@@ -23,7 +25,7 @@ export function Choice({
   votes,
   updateVotes,
 }: any) {
-  const str = choice.name;
+  const str = filter.clean(choice.name);
   const regex = /\{{{(.*?)\}}}/g;
   const txt = reactStringReplace(str, regex, (match: any, i: number) => (
     <div className="math">

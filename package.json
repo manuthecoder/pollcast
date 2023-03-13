@@ -25,7 +25,7 @@
     "mathjax-react": "^2.0.1",
     "mongodb": "^4.9.0",
     "next": "12.2.5",
-    "next-auth": "^4.10.3",
+    "next-auth": "^4.20.1",
     "next-pwa": "^5.6.0",
     "nodemailer": "^6.7.8",
     "react": "18.2.0",
